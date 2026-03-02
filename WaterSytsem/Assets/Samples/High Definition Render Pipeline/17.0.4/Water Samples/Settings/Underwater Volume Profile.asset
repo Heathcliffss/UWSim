@@ -20,7 +20,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 30
   ambientProbeDimmer:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.5
 --- !u!114 &-8845446057161508543
 MonoBehaviour:
@@ -46,10 +46,10 @@ MonoBehaviour:
     m_Value: 1
   fixedExposure:
     m_OverrideState: 1
-    m_Value: 13
+    m_Value: 8.089888
   compensation:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: -0.9
   limitMin:
     m_OverrideState: 0
     m_Value: -1
