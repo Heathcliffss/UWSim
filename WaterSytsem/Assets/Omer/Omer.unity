@@ -222,8 +222,8 @@ Transform:
   m_GameObject: {fileID: 208572227}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -19.93, z: 0}
-  m_LocalScale: {x: 1000, y: 1, z: 1000}
+  m_LocalPosition: {x: 0, y: -40, z: 0}
+  m_LocalScale: {x: 100, y: 1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2953,7 +2953,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: -86.29, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1260424830
 Transform:
@@ -2965,7 +2965,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1000, y: -40, z: 1000}
+  m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3299,15 +3299,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.96
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.44
+      value: -4.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.17
+      value: -12.4091
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4072,10 +4072,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetWaterSurface: {fileID: 1260424828}
   vehicleHeight: 0.47
-  vehicleVolume: 0.01
+  vehicleVolume: 0.00975
   atmosphericPressure: 101325
   currentWaterDensity: 0
-  linearDamping: {x: 15, y: 30, z: 10}
+  linearDamping: {x: 15, y: 50, z: 10}
   angularDamping: {x: 5, y: 5, z: 5}
   seaFloorLayer:
     serializedVersion: 2
@@ -4102,8 +4102,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.7484465, y: 2.5385196, z: 4.5719995}
-  m_Center: {x: -2.874846, y: 1.2692598, z: 2.2859998}
+  m_Size: {x: 5.748446, y: 2.5385194, z: 4.571999}
+  m_Center: {x: -2.8748457, y: 1.2692597, z: 2.2859995}
 --- !u!1 &1694552459
 GameObject:
   m_ObjectHideFlags: 0
