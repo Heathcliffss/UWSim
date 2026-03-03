@@ -5,64 +5,71 @@ using UnityEngine.InputSystem;
 public class RobotController : MonoBehaviour
 {
     [Header("Input Referanslarý")]
-    [Tooltip("Sol Joystick (Vector2)")]
+    [Tooltip("Sol Joystick (Yukarý/Aþaðý)")]
     public InputActionReference leftJoystick;
 
-    [Tooltip("Sað Joystick (Vector2)")]
+    [Tooltip("Sað Joystick (Saða/Sola Dönüþ)")]
     public InputActionReference rightJoystick;
 
-    [Tooltip("Sol Ýþaret Parmaðý Tetiði (Float) - Geri Gitme")]
+    [Tooltip("Sol Ýþaret Parmaðý Tetiði (Geri Gitme)")]
     public InputActionReference leftTrigger;
 
-    [Tooltip("Sað Ýþaret Parmaðý Tetiði (Float) - Ýleri Gitme")]
+    [Tooltip("Sað Ýþaret Parmaðý Tetiði (Ýleri Gitme)")]
     public InputActionReference rightTrigger;
 
     [Header("Hýz Ayarlarý")]
-    public float verticalSpeed = 3f;   // Yukarý/Aþaðý hýzý
-    public float forwardSpeed = 5f;    // Ýleri/Geri hýzý
-    public float rotationSpeed = 90f;  // Kendi etrafýnda dönme hýzý
+    public float verticalSpeed = 3f;
+    public float forwardSpeed = 5f;
+    public float rotationSpeed = 90f;
 
     private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        // VR'da hareket ederken oluþabilecek kamera titremesini (jitter) önler.
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
     void FixedUpdate()
     {
-        // --- 1. YUKARI / AÞAÐI HAREKET (Sol Joystick Y Ekseni) ---
+        // --- 1. YUKARI / AÞAÐI HAREKET ---
         Vector2 leftJoyValue = leftJoystick.action.ReadValue<Vector2>();
         float upDownInput = leftJoyValue.y;
 
-        // --- 2. KENDÝ EKSENÝNDE DÖNÜÞ (Sað Joystick X Ekseni) ---
-        Vector2 rightJoyValue = rightJoystick.action.ReadValue<Vector2>();
-        float rotationInput = rightJoyValue.x;
+        // --- 2. KENDÝ EKSENÝNDE DÖNÜÞ (KESÝN ÇÖZÜM UYGULANDI) ---
+        float rotationInput = 0f;
 
-        // --- 3. ÝLERÝ / GERÝ HAREKET (Tetikler) ---
-        // Tetikler 0 ile 1 arasýnda deðer döndürür.
+        // Input aksiyonunun Vector2 mi yoksa Float(Axis) mi olduðunu kontrol edip ona göre okuyoruz.
+        if (rightJoystick.action.expectedControlType == "Vector2")
+        {
+            rotationInput = rightJoystick.action.ReadValue<Vector2>().x;
+        }
+        else
+        {
+            rotationInput = rightJoystick.action.ReadValue<float>();
+        }
+
+        // --- 3. ÝLERÝ / GERÝ HAREKET ---
         float forwardInput = rightTrigger.action.ReadValue<float>();
         float backwardInput = leftTrigger.action.ReadValue<float>();
-
-        // Sað tetik basýlýysa pozitif, sol tetik basýlýysa negatif deðer elde ederiz.
-        // Ýkisine birden basýlýrsa birbirini nötrler (0 olur).
         float zMovement = forwardInput - backwardInput;
 
         // --- HAREKETÝ FÝZÝKSEL OLARAK UYGULAMA ---
-
-        // Robotun yerel (kendi baktýðý) yönüne göre hareket vektörünü oluþtur.
-        // X ekseni (sað/sol) = 0, Y ekseni = yukarý/aþaðý, Z ekseni = ileri/geri
         Vector3 movement = new Vector3(0f, upDownInput * verticalSpeed, zMovement * forwardSpeed);
         Vector3 localMovement = transform.TransformDirection(movement) * Time.fixedDeltaTime;
-
         rb.MovePosition(rb.position + localMovement);
 
         // --- DÖNÜÞÜ FÝZÝKSEL OLARAK UYGULAMA ---
-        Quaternion deltaRotation = Quaternion.Euler(new Vector3(0f, rotationInput * rotationSpeed * Time.fixedDeltaTime, 0f));
-        rb.MoveRotation(rb.rotation * deltaRotation);
+        // Joystick ufak tefek oynamalarýný (deadzone) yoksaymak için ufak bir eþik deðeri ekledik.
+        if (Mathf.Abs(rotationInput) > 0.05f)
+        {
+            Quaternion deltaRotation = Quaternion.Euler(new Vector3(0f, rotationInput * rotationSpeed * Time.fixedDeltaTime, 0f));
+            rb.MoveRotation(rb.rotation * deltaRotation);
+        }
     }
 
-    // Inputlarý aktif etme ve kapatma iþlemleri
     private void OnEnable()
     {
         leftJoystick.action.Enable();
