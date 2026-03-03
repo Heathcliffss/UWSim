@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 208572230}
   - component: {fileID: 208572229}
   - component: {fileID: 208572228}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 208572227}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -7.5, z: 0}
+  m_LocalPosition: {x: 0, y: -19.93, z: 0}
   m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1926,7 +1926,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1000, y: 15, z: 1000}
+  m_LocalScale: {x: 1000, y: -40, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 746104068}
@@ -2799,10 +2799,10 @@ MonoBehaviour:
   tessellationFactorFadeStart: 150
   tessellationFactorFadeRange: 1850
   refractionColor: {r: 0.18781857, g: 0.45881146, b: 0.45881146, a: 1}
-  maxRefractionDistance: 0.5
-  absorptionDistance: 8.8
+  maxRefractionDistance: 1.5
+  absorptionDistance: 30
   scatteringColor: {r: 0.052331064, g: 0.12379929, b: 0.1071727, a: 1}
-  ambientScattering: 0.363
+  ambientScattering: 0.511
   heightScattering: 0.621
   displacementScattering: 0.1
   directLightTipScattering: 0.6
@@ -2907,13 +2907,13 @@ MonoBehaviour:
     m_RotationOrder: 4
   repetitionSize: 25
   largeOrientationValue: 0
-  largeWindSpeed: 74
+  largeWindSpeed: 20
   largeChaos: 0.85
-  largeBand0Multiplier: 1
+  largeBand0Multiplier: 0.476
   largeBand0FadeMode: 1
   largeBand0FadeStart: 1500
   largeBand0FadeDistance: 3000
-  largeBand1Multiplier: 1
+  largeBand1Multiplier: 0.667
   largeBand1FadeMode: 1
   largeBand1FadeStart: 300
   largeBand1FadeDistance: 800
@@ -2921,7 +2921,7 @@ MonoBehaviour:
   ripplesMotionMode: 0
   ripplesOrientationValue: 0
   ripplesWindSpeed: 10
-  ripplesChaos: 1
+  ripplesChaos: 0.493
   ripplesFadeMode: 1
   ripplesFadeStart: 50
   ripplesFadeDistance: 200
@@ -2962,7 +2962,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1000, y: 15, z: 1000}
+  m_LocalScale: {x: 1000, y: -40, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3152,7 +3152,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1000, y: 15, z: 1000}
+  m_LocalScale: {x: 1000, y: -40, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3297,7 +3297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.89
+      value: 1.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3357,6 +3357,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1681559727}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1681559728}
   m_SourcePrefab: {fileID: 100100000, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
 --- !u!1 &1602208085
 GameObject:
@@ -3386,7 +3389,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.13, z: 0}
-  m_LocalScale: {x: 1000, y: 15, z: 1000}
+  m_LocalScale: {x: 1000, y: -40, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 746104068}
@@ -4062,18 +4065,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetWaterSurface: {fileID: 1260424828}
-  vehicleHeight: 0.3
-  waterDensity: 1023.6
+  vehicleHeight: 0.47
   vehicleVolume: 0.01
   atmosphericPressure: 101325
+  currentWaterDensity: 0
   linearDamping: {x: 15, y: 30, z: 10}
   angularDamping: {x: 5, y: 5, z: 5}
   seaFloorLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   depth: 0
   altitude: 0
   pressureBar: 0
+--- !u!65 &1681559728
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681559719}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.7484465, y: 2.5385196, z: 4.5719995}
+  m_Center: {x: -2.874846, y: 1.2692598, z: 2.2859998}
 --- !u!1 &1694552459
 GameObject:
   m_ObjectHideFlags: 0
@@ -4113,7 +4137,7 @@ Transform:
   m_GameObject: {fileID: 1694552459}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.85, z: 0}
+  m_LocalPosition: {x: 0, y: -18.279999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
