@@ -17,10 +17,11 @@ public class RobotController : MonoBehaviour
     [Tooltip("Sað Ýþaret Parmaðý Tetiði (Ýleri Gitme)")]
     public InputActionReference rightTrigger;
 
-    [Header("Hýz Ayarlarý")]
-    public float verticalSpeed = 3f;
-    public float forwardSpeed = 5f;
-    public float rotationSpeed = 90f;
+    [Header("Motor Ýtiþ Gücü (Thrust) Ayarlarý")]
+    [Tooltip("Motorlarýn Newton cinsinden itme kuvveti. Suyun direncini yenmek için yüksek deðerler (Örn: 100-500) gerekebilir.")]
+    public float verticalThrust = 150f;
+    public float forwardThrust = 200f;
+    public float turnTorque = 100f;
 
     private Rigidbody rb;
 
@@ -56,17 +57,20 @@ public class RobotController : MonoBehaviour
         float backwardInput = leftTrigger.action.ReadValue<float>();
         float zMovement = forwardInput - backwardInput;
 
-        // --- HAREKETÝ FÝZÝKSEL OLARAK UYGULAMA ---
-        Vector3 movement = new Vector3(0f, upDownInput * verticalSpeed, zMovement * forwardSpeed);
-        Vector3 localMovement = transform.TransformDirection(movement) * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + localMovement);
+        // --- MOTOR KUVVETLERÝNÝ (THRUST) UYGULAMA ---
 
-        // --- DÖNÜÞÜ FÝZÝKSEL OLARAK UYGULAMA ---
+        // Ýleri/Geri ve Yukarý/Aþaðý itiþ gücünü tek bir vektörde birleþtiriyoruz.
+        // AddRelativeForce, bu kuvveti doðrudan aracýn o an baktýðý yöne uygular (Gerçek motor gibi).
+        Vector3 linearThrust = new Vector3(0f, upDownInput * verticalThrust, zMovement * forwardThrust);
+        rb.AddRelativeForce(linearThrust, ForceMode.Force);
+
+        // --- DÖNÜÞ KUVVETÝNÝ (TORQUE) UYGULAMA ---
         // Joystick ufak tefek oynamalarýný (deadzone) yoksaymak için ufak bir eþik deðeri ekledik.
         if (Mathf.Abs(rotationInput) > 0.05f)
         {
-            Quaternion deltaRotation = Quaternion.Euler(new Vector3(0f, rotationInput * rotationSpeed * Time.fixedDeltaTime, 0f));
-            rb.MoveRotation(rb.rotation * deltaRotation);
+            // AddRelativeTorque, aracý kendi merkez ekseninden çevirmek için fiziksel tork (dönüþ kuvveti) uygular.
+            Vector3 angularThrust = new Vector3(0f, rotationInput * turnTorque, 0f);
+            rb.AddRelativeTorque(angularThrust, ForceMode.Force);
         }
     }
 

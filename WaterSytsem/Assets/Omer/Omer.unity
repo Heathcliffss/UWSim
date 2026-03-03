@@ -3354,6 +3354,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1681559720}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1681559727}
   m_SourcePrefab: {fileID: 100100000, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
 --- !u!1 &1602208085
 GameObject:
@@ -4007,13 +4010,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4e889dc1b4d2749a038e4908ec3920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftJoystick: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  rightJoystick: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  leftJoystick: {fileID: -60998027439631388, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  rightJoystick: {fileID: -8666952849799569744, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   leftTrigger: {fileID: -4289430672226363583, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightTrigger: {fileID: 7904272356298805229, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  verticalSpeed: 3
-  forwardSpeed: 5
-  rotationSpeed: 90
+  verticalThrust: 40
+  forwardThrust: 50
+  turnTorque: 15
 --- !u!54 &1681559721
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4022,9 +4025,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1681559719}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -4036,16 +4039,41 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!4 &1681559724 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
   m_PrefabInstance: {fileID: 1482572429}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1681559727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681559719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8244bf075d7b7149bec50fda0265abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetWaterSurface: {fileID: 1260424828}
+  vehicleHeight: 0.3
+  waterDensity: 1023.6
+  vehicleVolume: 0.01
+  atmosphericPressure: 101325
+  linearDamping: {x: 15, y: 30, z: 10}
+  angularDamping: {x: 5, y: 5, z: 5}
+  seaFloorLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  depth: 0
+  altitude: 0
+  pressureBar: 0
 --- !u!1 &1694552459
 GameObject:
   m_ObjectHideFlags: 0
