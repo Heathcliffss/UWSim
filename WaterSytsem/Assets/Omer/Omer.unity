@@ -222,8 +222,8 @@ Transform:
   m_GameObject: {fileID: 208572227}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -19.93, z: 0}
-  m_LocalScale: {x: 1000, y: 1, z: 1000}
+  m_LocalPosition: {x: 0, y: -40, z: 0}
+  m_LocalScale: {x: 100, y: 1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -802,8 +802,8 @@ Transform:
   m_GameObject: {fileID: 515493870}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 14.339, z: 0}
+  m_LocalScale: {x: 26.971565, y: 7.6135297, z: 15.419996}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1694552461}
@@ -869,19 +869,22 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 483.4
+      - m_Value: 31.6
         m_Name: Attract Sphere_radius
-        m_Overridden: 1
+        m_Overridden: 0
     m_Vector2f:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: -77.68, y: -1, z: 306.49}
+      - m_Value: {x: 0, y: 2.4, z: 0}
         m_Name: Attract Sphere_transform_position
         m_Overridden: 1
       - m_Value: {x: 1, y: 1, z: 1}
         m_Name: Attract Sphere_transform_scale
         m_Overridden: 0
+      - m_Value: {x: 1.95, y: 26.26, z: 41.13}
+        m_Name: Attract Sphere_transform_angles
+        m_Overridden: 1
     m_Vector4f:
       m_Array: []
     m_Uint:
@@ -1047,11 +1050,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.84
+      value: 2.7
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2798,9 +2801,9 @@ MonoBehaviour:
   maxTessellationFactor: 3
   tessellationFactorFadeStart: 150
   tessellationFactorFadeRange: 1850
-  refractionColor: {r: 0.18781857, g: 0.45881146, b: 0.45881146, a: 1}
-  maxRefractionDistance: 1.5
-  absorptionDistance: 30
+  refractionColor: {r: 0.18781857, g: 0.45881137, b: 0.45881137, a: 1}
+  maxRefractionDistance: 1.43
+  absorptionDistance: 19.6
   scatteringColor: {r: 0.052331064, g: 0.12379929, b: 0.1071727, a: 1}
   ambientScattering: 0.511
   heightScattering: 0.621
@@ -2858,7 +2861,7 @@ MonoBehaviour:
   foamColor: {r: 1, g: 1, b: 1, a: 1}
   foamTextureTiling: 0.15
   foamSmoothness: 1
-  simulationFoamAmount: 0.2
+  simulationFoamAmount: 1
   supportSimulationFoamMask: 1
   simulationFoamMask: {fileID: 0}
   simulationFoamMaskExtent: {x: 100, y: 100}
@@ -2950,7 +2953,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: -86.29, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1260424830
 Transform:
@@ -2962,7 +2965,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1000, y: -40, z: 1000}
+  m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3184,7 +3187,7 @@ Transform:
   m_GameObject: {fileID: 1446346277}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 6.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3254,7 +3257,10 @@ VisualEffect:
     m_Vector2f:
       m_Array: []
     m_Vector3f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 500, y: 5, z: 500}
+        m_Name: New Oriented Box_size
+        m_Overridden: 1
     m_Vector4f:
       m_Array: []
     m_Uint:
@@ -3293,15 +3299,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.99
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.15
+      value: -4.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.104058
+      value: -12.4091
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4066,10 +4072,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetWaterSurface: {fileID: 1260424828}
   vehicleHeight: 0.47
-  vehicleVolume: 0.01
+  vehicleVolume: 0.00975
   atmosphericPressure: 101325
   currentWaterDensity: 0
-  linearDamping: {x: 15, y: 30, z: 10}
+  linearDamping: {x: 15, y: 50, z: 10}
   angularDamping: {x: 5, y: 5, z: 5}
   seaFloorLayer:
     serializedVersion: 2
@@ -4096,8 +4102,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.7484465, y: 2.5385196, z: 4.5719995}
-  m_Center: {x: -2.874846, y: 1.2692598, z: 2.2859998}
+  m_Size: {x: 5.748446, y: 2.5385194, z: 4.571999}
+  m_Center: {x: -2.8748457, y: 1.2692597, z: 2.2859995}
 --- !u!1 &1694552459
 GameObject:
   m_ObjectHideFlags: 0
