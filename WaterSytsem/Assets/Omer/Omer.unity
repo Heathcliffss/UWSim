@@ -1401,13 +1401,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961323485}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10790817, y: -0, z: -0, w: 0.9941609}
-  m_LocalPosition: {x: -0.99, y: 2.3520002, z: 4.593}
+  m_LocalRotation: {x: 0.10735264, y: 0.10074789, z: 0.010935375, w: 0.9890428}
+  m_LocalPosition: {x: -1.01, y: 2.3759985, z: 4.4989967}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1681559724}
-  m_LocalEulerAnglesHint: {x: 12.39, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 12.131, y: 11.902, z: 2.536}
 --- !u!114 &961323487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1427,7 +1427,7 @@ MonoBehaviour:
   m_LightUnit: 0
   m_LuxAtDistance: 1
   m_Intensity: 0
-  m_InnerSpotPercent: 85.012924
+  m_InnerSpotPercent: 1.5486727
   m_SpotIESCutoffPercent: 100
   m_LightDimmer: 1
   m_VolumetricDimmer: 3.83
@@ -1561,9 +1561,9 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 11369.675
-  m_Range: 20
-  m_SpotAngle: 127.78303
+  m_Intensity: 41177.19
+  m_Range: 4.4
+  m_SpotAngle: 64.57143
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
@@ -1687,13 +1687,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1036149691}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10790817, y: -0, z: -0, w: 0.9941609}
-  m_LocalPosition: {x: -4.858, y: 2.3520002, z: 4.593}
+  m_LocalRotation: {x: 0.107385196, y: -0.09775929, z: -0.010610984, w: 0.9893427}
+  m_LocalPosition: {x: -4.808, y: 2.3670006, z: 4.541998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1681559724}
-  m_LocalEulerAnglesHint: {x: 12.39, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 12.146, y: -11.548, z: -2.462}
 --- !u!114 &1036149693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1713,7 +1713,7 @@ MonoBehaviour:
   m_LightUnit: 0
   m_LuxAtDistance: 1
   m_Intensity: 0
-  m_InnerSpotPercent: 85.012924
+  m_InnerSpotPercent: 1.5486727
   m_SpotIESCutoffPercent: 100
   m_LightDimmer: 1
   m_VolumetricDimmer: 3.83
@@ -1847,9 +1847,9 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 11369.675
-  m_Range: 20
-  m_SpotAngle: 127.78303
+  m_Intensity: 41177.19
+  m_Range: 4.4
+  m_SpotAngle: 64.57143
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
@@ -3126,7 +3126,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 15, y: 2, z: 15}
+  m_Size: {x: 15, y: -40, z: 15}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1407545644
 MonoBehaviour:
@@ -3155,7 +3155,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1000, y: -40, z: 1000}
+  m_LocalScale: {x: 1000, y: 0, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3287,15 +3287,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3303,7 +3303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.8
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3336,6 +3336,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 263dd27151f3a6d449e6b35c46bb18bd, type: 3}
       propertyPath: m_Name
@@ -4071,11 +4075,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetWaterSurface: {fileID: 1260424828}
-  vehicleHeight: 0.47
-  vehicleVolume: 0.00975
+  vehicleHeight: 0.3
+  vehicleVolume: 0.0103
   atmosphericPressure: 101325
   currentWaterDensity: 0
-  linearDamping: {x: 15, y: 50, z: 10}
+  linearDamping: {x: 15, y: 25, z: 10}
   angularDamping: {x: 5, y: 5, z: 5}
   seaFloorLayer:
     serializedVersion: 2
@@ -4102,8 +4106,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.748446, y: 2.5385194, z: 4.571999}
-  m_Center: {x: -2.8748457, y: 1.2692597, z: 2.2859995}
+  m_Size: {x: 5.7484465, y: 2.5385196, z: 4.5719995}
+  m_Center: {x: -2.874846, y: 1.2692598, z: 2.2859998}
 --- !u!1 &1694552459
 GameObject:
   m_ObjectHideFlags: 0
