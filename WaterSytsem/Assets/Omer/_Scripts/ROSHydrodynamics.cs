@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Rendering.HighDefinition; // HDRP SU SİSTEMİ İÇİN ŞART
+using UnityEngine.Rendering.HighDefinition;
 
 [RequireComponent(typeof(Rigidbody))]
 public class ROSHydrodynamics : MonoBehaviour
@@ -8,16 +8,21 @@ public class ROSHydrodynamics : MonoBehaviour
     [Tooltip("Sahnendeki Water Surface objesini buraya sürükle")]
     public WaterSurface targetWaterSurface;
 
-    [Tooltip("Aracın gövde yüksekliği (Metre). Yüzeyde dengeli durması için.")]
-    public float vehicleHeight = 0.5f;
+    [Tooltip("Aracın gövde yüksekliği. Yumuşak çıkış için 0.6 yapıldı.")]
+    public float vehicleHeight = 0.6f;
 
     [Header("Akışkan ve Araç Parametreleri")]
-    public float waterDensity = 1023.6f;
-    public float vehicleVolume = 0.05f;
+    [Tooltip("Haliç'in üst ve alt katman ortalaması olan hacim hesaplandı.")]
+    public float vehicleVolume = 0.00979f;
     public float atmosphericPressure = 101325f;
 
+    [Header("Haliç Katman Verileri (Canlı)")]
+    [Tooltip("O anki derinliğe göre suyun hesaplanan gerçek yoğunluğu")]
+    public float currentWaterDensity;
+
     [Header("Hidrodinamik Sönümleme (Damping)")]
-    public Vector3 linearDamping = new Vector3(15f, 30f, 10f);
+    // Y ekseni (Yukarı/Aşağı) direnci artırıldı ki dibe inmek/çıkmak zorlaşsın.
+    public Vector3 linearDamping = new Vector3(15f, 25f, 10f);
     public Vector3 angularDamping = new Vector3(5f, 5f, 5f);
 
     [Header("Sensörler (ROS Simülasyonu İçin)")]
@@ -26,9 +31,7 @@ public class ROSHydrodynamics : MonoBehaviour
     public float altitude;
     public float pressureBar;
 
-    // Anlık dalga yüksekliği (Artık sabit 0 değil, sürekli güncellenecek)
     private float currentWaterSurfaceY;
-
     private Rigidbody rb;
 
     void Start()
@@ -36,20 +39,18 @@ public class ROSHydrodynamics : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.linearDamping = 0f;
         rb.angularDamping = 0f;
+
+        // Hacıyatmaz Etkisi: Ağırlık merkezini 15 cm aşağı çekiyoruz ki araç suyun yüzeyinde devrilmesin, kusursuz yüzsün.
+        rb.centerOfMass = new Vector3(0f, -0.15f, 0f);
     }
 
     void FixedUpdate()
     {
-        // 1. Önce HDRP'den anlık dalga yüksekliğini bul
         UpdateDynamicWaterHeight();
-
-        // 2. Sensörleri ve derinliği bu yeni dalga yüksekliğine göre hesapla
         CalculateSensors();
 
-        // 3. Aracın ne kadarı suyun içinde (Kaldırma kuvvetini sıfırlayıp uçmasını engeller)
         float submersionRatio = CalculateSubmersion();
 
-        // 4. Sadece araç suya temas ediyorsa fizik kurallarını uygula
         if (submersionRatio > 0f)
         {
             ApplyBuoyancy(submersionRatio);
@@ -59,18 +60,16 @@ public class ROSHydrodynamics : MonoBehaviour
 
     private void UpdateDynamicWaterHeight()
     {
-        // Eğer Inspector'dan HDRP Water eklendiyse
         if (targetWaterSurface != null)
         {
             WaterSearchParameters searchParams = new WaterSearchParameters();
-            searchParams.startPositionWS = transform.position; // Aracın mevcut konumu
+            searchParams.startPositionWS = transform.position;
             searchParams.targetPositionWS = transform.position;
             searchParams.error = 0.01f;
             searchParams.maxIterations = 8;
 
             WaterSearchResult searchResult = new WaterSearchResult();
 
-            // HDRP API: Aracın bulunduğu noktadaki dalganın dünya koordinatını hesapla
             if (targetWaterSurface.ProjectPointOnWaterSurface(searchParams, out searchResult))
             {
                 currentWaterSurfaceY = searchResult.projectedPositionWS.y;
@@ -78,18 +77,40 @@ public class ROSHydrodynamics : MonoBehaviour
         }
         else
         {
-            currentWaterSurfaceY = 0f; // Eğer su objesi atanmadıysa varsayılan 0 al
+            currentWaterSurfaceY = 0f;
+        }
+    }
+
+    // YENİ HALİÇ KATMAN SİSTEMİ: Derinliğe göre su yoğunluğunu hesaplar
+    private float GetDynamicWaterDensity(float currentDepth)
+    {
+        if (currentDepth <= 15f)
+        {
+            return 1014f; // Üst Katman (Karadeniz suyu)
+        }
+        else if (currentDepth >= 25f)
+        {
+            return 1028f; // Alt Katman (Akdeniz suyu)
+        }
+        else
+        {
+            // Haloklin Bariyeri (Geçiş bölgesi)
+            float t = (currentDepth - 15f) / 10f;
+            return Mathf.Lerp(1014f, 1028f, t);
         }
     }
 
     private void CalculateSensors()
     {
-        // Derinlik artık aracın o anki dalgaya olan mesafesi!
         depth = currentWaterSurfaceY - transform.position.y;
+
+        // O anki derinliğe göre suyun yoğunluğunu güncelliyoruz
+        currentWaterDensity = GetDynamicWaterDensity(depth > 0 ? depth : 0);
 
         if (depth > 0)
         {
-            float pressurePascal = atmosphericPressure + (waterDensity * Mathf.Abs(Physics.gravity.y) * depth);
+            // Basınç hesabı artık Haliç'in dinamik yoğunluğuna göre yapılıyor
+            float pressurePascal = atmosphericPressure + (currentWaterDensity * Mathf.Abs(Physics.gravity.y) * depth);
             pressureBar = pressurePascal / 100000f;
         }
         else
@@ -98,7 +119,6 @@ public class ROSHydrodynamics : MonoBehaviour
             pressureBar = atmosphericPressure / 100000f;
         }
 
-        // İrtifa (Altimetre) Raycast'i
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 1000f, seaFloorLayer))
         {
@@ -117,15 +137,14 @@ public class ROSHydrodynamics : MonoBehaviour
 
         if (bottomPoint > currentWaterSurfaceY)
         {
-            return 0f; // Tamamen havada (Uçamaz, çünkü oran 0 dönüyor)
+            return 0f;
         }
         else if (topPoint < currentWaterSurfaceY)
         {
-            return 1f; // Tamamen sular altında
+            return 1f;
         }
         else
         {
-            // Suyun yüzeyindeyken oran hesapla (Yüzmesini / Sekmesini sağlar)
             return (currentWaterSurfaceY - bottomPoint) / vehicleHeight;
         }
     }
@@ -133,26 +152,31 @@ public class ROSHydrodynamics : MonoBehaviour
     private void ApplyBuoyancy(float submersionRatio)
     {
         float gravity = Mathf.Abs(Physics.gravity.y);
-        float buoyancyForce = waterDensity * vehicleVolume * gravity * submersionRatio;
+        // Kaldırma kuvveti Haliç'in değişken yoğunluğuna (currentWaterDensity) göre çalışır
+        float buoyancyForce = currentWaterDensity * vehicleVolume * gravity * submersionRatio;
         rb.AddForce(Vector3.up * buoyancyForce, ForceMode.Force);
     }
 
     private void ApplyHydrodynamicDrag(float submersionRatio)
     {
+        // "Yunus Atlayışı" Koruması: Araç sudan çıksa bile sürtünmenin %30'u kalır ki roket gibi uçmasın.
+        float effectiveRatio = Mathf.Clamp(submersionRatio, 0.3f, 1.0f);
+
         Vector3 localVelocity = transform.InverseTransformDirection(rb.linearVelocity);
         Vector3 localAngularVelocity = transform.InverseTransformDirection(rb.angularVelocity);
 
+        // Direnç kuvvetleri submersionRatio yerine effectiveRatio ile çarpılıyor
         Vector3 dragForce = new Vector3(
             -linearDamping.x * localVelocity.x,
             -linearDamping.y * localVelocity.y,
             -linearDamping.z * localVelocity.z
-        ) * submersionRatio;
+        ) * effectiveRatio;
 
         Vector3 dragTorque = new Vector3(
             -angularDamping.x * localAngularVelocity.x,
             -angularDamping.y * localAngularVelocity.y,
             -angularDamping.z * localAngularVelocity.z
-        ) * submersionRatio;
+        ) * effectiveRatio;
 
         rb.AddRelativeForce(dragForce, ForceMode.Force);
         rb.AddRelativeTorque(dragTorque, ForceMode.Force);

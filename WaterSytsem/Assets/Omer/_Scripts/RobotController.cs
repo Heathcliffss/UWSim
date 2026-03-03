@@ -18,17 +18,16 @@ public class RobotController : MonoBehaviour
     public InputActionReference rightTrigger;
 
     [Header("Motor Ýtiþ Gücü (Thrust) Ayarlarý")]
-    [Tooltip("Motorlarýn Newton cinsinden itme kuvveti. Suyun direncini yenmek için yüksek deðerler (Örn: 100-500) gerekebilir.")]
-    public float verticalThrust = 150f;
-    public float forwardThrust = 200f;
-    public float turnTorque = 100f;
+    [Tooltip("Haliç'in yoðun alt katmanýna inebilmek için dikey gücü yüksek tutmalýyýz.")]
+    public float verticalThrust = 100f;   // Dibe inmek için artýrýldý
+    public float forwardThrust = 50f;     // Gerçekçi, oturaklý ileri gidiþ
+    public float turnTorque = 15f;        // Aðýr ve kontrollü dönüþ
 
     private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
         // VR'da hareket ederken oluþabilecek kamera titremesini (jitter) önler.
         rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
@@ -58,17 +57,13 @@ public class RobotController : MonoBehaviour
         float zMovement = forwardInput - backwardInput;
 
         // --- MOTOR KUVVETLERÝNÝ (THRUST) UYGULAMA ---
-
         // Ýleri/Geri ve Yukarý/Aþaðý itiþ gücünü tek bir vektörde birleþtiriyoruz.
-        // AddRelativeForce, bu kuvveti doðrudan aracýn o an baktýðý yöne uygular (Gerçek motor gibi).
         Vector3 linearThrust = new Vector3(0f, upDownInput * verticalThrust, zMovement * forwardThrust);
         rb.AddRelativeForce(linearThrust, ForceMode.Force);
 
         // --- DÖNÜÞ KUVVETÝNÝ (TORQUE) UYGULAMA ---
-        // Joystick ufak tefek oynamalarýný (deadzone) yoksaymak için ufak bir eþik deðeri ekledik.
         if (Mathf.Abs(rotationInput) > 0.05f)
         {
-            // AddRelativeTorque, aracý kendi merkez ekseninden çevirmek için fiziksel tork (dönüþ kuvveti) uygular.
             Vector3 angularThrust = new Vector3(0f, rotationInput * turnTorque, 0f);
             rb.AddRelativeTorque(angularThrust, ForceMode.Force);
         }
