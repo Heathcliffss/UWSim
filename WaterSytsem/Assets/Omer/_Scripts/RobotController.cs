@@ -17,11 +17,20 @@ public class RobotController : MonoBehaviour
     [Tooltip("Sað Ýþaret Parmaðý Tetiði (Ýleri Gitme)")]
     public InputActionReference rightTrigger;
 
+    [Tooltip("Sol Orta Parmak (Grip) - Sola Yuvarlanma (Roll)")]
+    public InputActionReference leftGrip;
+
+    [Tooltip("Sað Orta Parmak (Grip) - Saða Yuvarlanma (Roll)")]
+    public InputActionReference rightGrip;
+
     [Header("Motor Ýtiþ Gücü (Thrust) Ayarlarý")]
     [Tooltip("Haliç'in yoðun alt katmanýna inebilmek için dikey gücü yüksek tutmalýyýz.")]
     public float verticalThrust = 100f;   // Dibe inmek için artýrýldý
     public float forwardThrust = 50f;     // Gerçekçi, oturaklý ileri gidiþ
-    public float turnTorque = 15f;        // Aðýr ve kontrollü dönüþ
+
+    [Header("Dönüþ Gücü (Torque) Ayarlarý")]
+    public float turnTorque = 15f;        // Sað/Sol dönme gücü (Yaw)
+    public float rollTorque = 20f;        // Kendi ekseninde yuvarlanma gücü (Roll)
 
     private Rigidbody rb;
 
@@ -38,10 +47,8 @@ public class RobotController : MonoBehaviour
         Vector2 leftJoyValue = leftJoystick.action.ReadValue<Vector2>();
         float upDownInput = leftJoyValue.y;
 
-        // --- 2. KENDÝ EKSENÝNDE DÖNÜÞ (KESÝN ÇÖZÜM UYGULANDI) ---
+        // --- 2. KENDÝ EKSENÝNDE SAÐA/SOLA DÖNÜÞ (YAW) ---
         float rotationInput = 0f;
-
-        // Input aksiyonunun Vector2 mi yoksa Float(Axis) mi olduðunu kontrol edip ona göre okuyoruz.
         if (rightJoystick.action.expectedControlType == "Vector2")
         {
             rotationInput = rightJoystick.action.ReadValue<Vector2>().x;
@@ -56,15 +63,33 @@ public class RobotController : MonoBehaviour
         float backwardInput = leftTrigger.action.ReadValue<float>();
         float zMovement = forwardInput - backwardInput;
 
+        // --- 4. YUVARLANMA HAREKETÝ (ROLL - Grip Tuþlarý) ---
+        float rollLeftInput = leftGrip.action.ReadValue<float>();
+        float rollRightInput = rightGrip.action.ReadValue<float>();
+
+        // Unity'de Z ekseninde pozitif dönüþ sola, negatif dönüþ saða yatýrýr.
+        // Sol tuþa basarsak pozitif, sað tuþa basarsak negatif deðer elde ederiz.
+        float zRollMovement = rollLeftInput - rollRightInput;
+
         // --- MOTOR KUVVETLERÝNÝ (THRUST) UYGULAMA ---
-        // Ýleri/Geri ve Yukarý/Aþaðý itiþ gücünü tek bir vektörde birleþtiriyoruz.
         Vector3 linearThrust = new Vector3(0f, upDownInput * verticalThrust, zMovement * forwardThrust);
         rb.AddRelativeForce(linearThrust, ForceMode.Force);
 
-        // --- DÖNÜÞ KUVVETÝNÝ (TORQUE) UYGULAMA ---
+        // --- DÖNÜÞ KUVVETLERÝNÝ (TORQUE) BÝRLEÞTÝRME VE UYGULAMA ---
+        float finalYawTorque = 0f;
+
+        // Joystick ufak tefek oynamalarýný (deadzone) yoksaymak için eþik deðeri
         if (Mathf.Abs(rotationInput) > 0.05f)
         {
-            Vector3 angularThrust = new Vector3(0f, rotationInput * turnTorque, 0f);
+            finalYawTorque = rotationInput * turnTorque;
+        }
+
+        // Y ekseni (Yaw/Sað-Sol Dönüþ) ve Z ekseni (Roll/Yuvarlanma) torklarýný birleþtir
+        Vector3 angularThrust = new Vector3(0f, finalYawTorque, zRollMovement * rollTorque);
+
+        // Eðer herhangi bir dönüþ girdisi varsa kuvveti uygula
+        if (angularThrust != Vector3.zero)
+        {
             rb.AddRelativeTorque(angularThrust, ForceMode.Force);
         }
     }
@@ -75,6 +100,8 @@ public class RobotController : MonoBehaviour
         rightJoystick.action.Enable();
         leftTrigger.action.Enable();
         rightTrigger.action.Enable();
+        if (leftGrip != null) leftGrip.action.Enable();
+        if (rightGrip != null) rightGrip.action.Enable();
     }
 
     private void OnDisable()
@@ -83,5 +110,7 @@ public class RobotController : MonoBehaviour
         rightJoystick.action.Disable();
         leftTrigger.action.Disable();
         rightTrigger.action.Disable();
+        if (leftGrip != null) leftGrip.action.Disable();
+        if (rightGrip != null) rightGrip.action.Disable();
     }
 }
