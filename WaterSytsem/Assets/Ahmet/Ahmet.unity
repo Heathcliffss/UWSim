@@ -2532,15 +2532,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.99
+      value: -2.88
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.84
+      value: 0.445
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3
+      value: 4.36
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4832,11 +4832,11 @@ MonoBehaviour:
   maxTessellationFactor: 3
   tessellationFactorFadeStart: 150
   tessellationFactorFadeRange: 1850
-  refractionColor: {r: 0.18781857, g: 0.45881137, b: 0.45881137, a: 1}
-  maxRefractionDistance: 1.43
-  absorptionDistance: 19.6
-  scatteringColor: {r: 0.052331064, g: 0.12379929, b: 0.1071727, a: 1}
-  ambientScattering: 0.511
+  refractionColor: {r: 0.022173876, g: 0.6931047, b: 0.7681513, a: 1}
+  maxRefractionDistance: 3.5
+  absorptionDistance: 34
+  scatteringColor: {r: 0.043993086, g: 0.41016114, b: 0.5600193, a: 1}
+  ambientScattering: 0.8
   heightScattering: 0.621
   displacementScattering: 0.1
   directLightTipScattering: 0.6
@@ -4847,8 +4847,8 @@ MonoBehaviour:
   causticsPlaneBlendDistance: 1
   causticsResolution: 1024
   causticsBand: 2
-  virtualPlaneDistance: 4
-  causticsTilingFactor: 0.5
+  virtualPlaneDistance: 3
+  causticsTilingFactor: 5
   causticsDirectionalShadow: 1
   causticsDirectionalShadowDimmer: 0
   renderingLayerMask: 257
