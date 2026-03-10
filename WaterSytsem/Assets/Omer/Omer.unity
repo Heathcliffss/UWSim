@@ -4203,7 +4203,7 @@ MonoBehaviour:
   verticalThrust: 40
   forwardThrust: 50
   turnTorque: 15
-  rollTorque: 20
+  rollTorque: 10
 --- !u!54 &1681559721
 Rigidbody:
   m_ObjectHideFlags: 0

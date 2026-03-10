@@ -40,8 +40,17 @@ public class ROSHydrodynamics : MonoBehaviour
         rb.linearDamping = 0f;
         rb.angularDamping = 0f;
 
-        // Hacıyatmaz Etkisi: Ağırlık merkezini 15 cm aşağı çekiyoruz ki araç suyun yüzeyinde devrilmesin, kusursuz yüzsün.
-        rb.centerOfMass = new Vector3(0f, -0.15f, 0f);
+        // Aracın gerçek görsel merkezini BoxCollider'ın merkezinden otomatik olarak çekeriz.
+        BoxCollider col = GetComponent<BoxCollider>();
+        if (col != null)
+        {
+            // X ve Z ekseninde tam ortadan döner, Y ekseninde (aşağı) hacıyatmaz dengesi için biraz kaydırılır.
+            rb.centerOfMass = new Vector3(col.center.x, col.center.y - 0.15f, col.center.z);
+        }
+        else
+        {
+            rb.centerOfMass = new Vector3(0f, -0.15f, 0f);
+        }
     }
 
     void FixedUpdate()
