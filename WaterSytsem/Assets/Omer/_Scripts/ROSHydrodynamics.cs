@@ -26,6 +26,10 @@ public class ROSHydrodynamics : MonoBehaviour
     public Vector3 angularDamping = new Vector3(5f, 5f, 5f);
 
     [Header("Sensörler (ROS Simülasyonu İçin)")]
+
+    [Header("Referans Noktası")]
+    [Tooltip("Aracın içine koyduğumuz 'MerkezPivot' objesini buraya sürükle.")]
+    public Transform merkezPivot;
     public LayerMask seaFloorLayer;
     public float depth;
     public float altitude;
@@ -40,12 +44,10 @@ public class ROSHydrodynamics : MonoBehaviour
         rb.linearDamping = 0f;
         rb.angularDamping = 0f;
 
-        // Aracın gerçek görsel merkezini BoxCollider'ın merkezinden otomatik olarak çekeriz.
-        BoxCollider col = GetComponent<BoxCollider>();
-        if (col != null)
+        // Aracın ağırlık merkezini doğrudan senin koyduğun o Pivot noktasına eşitliyoruz!
+        if (merkezPivot != null)
         {
-            // X ve Z ekseninde tam ortadan döner, Y ekseninde (aşağı) hacıyatmaz dengesi için biraz kaydırılır.
-            rb.centerOfMass = new Vector3(col.center.x, col.center.y - 0.15f, col.center.z);
+            rb.centerOfMass = merkezPivot.localPosition;
         }
         else
         {
