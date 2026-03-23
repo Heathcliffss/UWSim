@@ -36,8 +36,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: -660
     y: -1433
-    width: 1987
-    height: 2770
+    width: 1986
+    height: 2747
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,7 +210,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 100
+      m_SerializableObject: 500
     m_Space: -1
   m_Property:
     name: Rate

@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/MainPOOL/OutdoorsScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
   m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a732ad7dcd10a9e4f97d8aa3ee171caa, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: f0135d4ba93458f41babb8c755816c87, type: 2}
   m_UseUCBPForAssetBundles: 0
