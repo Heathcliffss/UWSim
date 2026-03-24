@@ -187,14 +187,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   quality:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   threshold:
     m_OverrideState: 0
     m_Value: 0
   intensity:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.301
   scatter:
     m_OverrideState: 1
     m_Value: 0.5
@@ -211,13 +211,13 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   m_Resolution:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 2
   m_HighQualityPrefiltering:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   m_HighQualityFiltering:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
 --- !u!114 &-1841341363015335191
 MonoBehaviour:
@@ -589,7 +589,7 @@ MonoBehaviour:
     m_Value: 0
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 50
+    m_Value: 60
   meanFreePath:
     m_OverrideState: 1
     m_Value: 256
