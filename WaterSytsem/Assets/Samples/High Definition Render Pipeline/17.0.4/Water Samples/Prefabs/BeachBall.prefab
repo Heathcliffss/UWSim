@@ -202,4 +202,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 8147672144557667316, guid: 955fa66aa1d829b45a46a3db0974ccbf, type: 3}
-  thresholdSpeed: 0.5
