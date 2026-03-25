@@ -15272,7 +15272,7 @@ MonoBehaviour:
   currentWaterDensity: 0
   linearDamping: {x: 15, y: 25, z: 10}
   angularDamping: {x: 5, y: 5, z: 5}
-  merkezPivot: {fileID: 0}
+  merkezPivot: {fileID: 227822965}
   seaFloorLayer:
     serializedVersion: 2
     m_Bits: 64
