@@ -1,37 +1,70 @@
 using UnityEngine;
-using TMPro; // TextMeshPro kullanmak için gerekli
+using TMPro;
+using UnityEngine.UI;
 
 public class CubeController : MonoBehaviour
 {
-    [Header("Hareket Ayarları")]
+    [Header("Simülasyon Ayarları")]
     public float moveSpeed = 5f;
+    public float rotateSpeed = 40f;
 
-    [Header("UI Referansları")]
+    [Header("Kritik UI Referansları")]
     public TextMeshProUGUI speedText;
-    public TextMeshProUGUI depthText;
+    public TextMeshProUGUI altitudeText;
+    public RectTransform artificialHorizonLine;
+
+    [Header("Görsel UI Referansları (İsteğe Bağlı)")]
+    public TextMeshProUGUI pitchTextDisplay;
+    public TextMeshProUGUI rollTextDisplay;
+
+    private float currentPitch = 0f;
+    private float currentRoll = 0f;
 
     void Update()
     {
-        // 1. Hareket Girdilerini Al (W,A,S,D veya Ok Tuşları)
+        // 1. HAREKET (W,S,A,D)
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
-        // 2. Hareketi Uygula (X ve Y ekseninde)
         Vector3 movement = new Vector3(moveX, moveY, 0) * moveSpeed * Time.deltaTime;
         transform.Translate(movement, Space.World);
 
-        // 3. UI Verilerini Güncelle
-        UpdateDisplay();
+        // 2. DÖNÜŞ (Roll ve Pitch)
+        // A ve D tuşları ile Roll değerini güncelliyoruz
+        currentRoll += moveX * rotateSpeed * Time.deltaTime;
+
+        // Ok tuşları ile Pitch değerini güncelliyoruz
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            currentPitch += rotateSpeed * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            currentPitch -= rotateSpeed * Time.deltaTime;
+        }
+
+        currentPitch = Mathf.Clamp(currentPitch, -80f, 80f);
+
+        // Küpün kendi rotasyonunu uygula
+        transform.rotation = Quaternion.Euler(currentPitch, 0, -currentRoll);
+
+        // 3. UI GÜNCELLEME
+        UpdateTelemetriUI(moveX, moveY);
     }
 
-    void UpdateDisplay()
+    void UpdateTelemetriUI(float x, float y)
     {
-        // Anlık hızı hesapla (Tuşlara basılıyorsa moveSpeed, değilse 0)
-        float currentSpeed = (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) ? moveSpeed : 0;
+        // Metin verilerini güncelle
+        float currentSpeedVal = (x != 0 || y != 0) ? moveSpeed : 0;
+        speedText.text = "Hız (m/s): " + currentSpeedVal.ToString("F2");
+        altitudeText.text = "Altitude-rel (m): " + transform.position.y.ToString("F2");
 
-        speedText.text = "Hız: " + currentSpeed.ToString("F2");
+        if (pitchTextDisplay) pitchTextDisplay.text = "Pitch: " + currentPitch.ToString("F1") + "°";
+        if (rollTextDisplay) rollTextDisplay.text = "Roll: " + currentRoll.ToString("F1") + "°";
 
-        // Derinlik genellikle Z eksenidir
-        depthText.text = "Derinlik (Z): " + transform.position.z.ToString("F2");
+        // İSTEDİĞİN DEĞİŞİKLİK: 
+        // localPosition (yukarı-aşağı kayma) kodunu tamamen sildim.
+        // Çizgi artık sadece merkezinde (Z ekseninde) dönerek Roll açısını gösterecek.
+        artificialHorizonLine.localRotation = Quaternion.Euler(0, 0, currentRoll);
     }
 }
