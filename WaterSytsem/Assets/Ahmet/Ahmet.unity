@@ -8184,7 +8184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1047587069
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8227,35 +8227,35 @@ MonoBehaviour:
   surfaceType: 0
   geometryType: 2
   meshRenderers: []
-  timeMultiplier: 1
+  timeMultiplier: 1.2
   scriptInteractions: 1
-  cpuEvaluateRipples: 0
+  cpuEvaluateRipples: 1
   customMaterial: {fileID: 0}
   startSmoothness: 0.8776597
   endSmoothness: 0.5691489
   smoothnessFadeStart: 100
   smoothnessFadeDistance: 500
   tessellation: 1
-  maxTessellationFactor: 3
+  maxTessellationFactor: 8
   tessellationFactorFadeStart: 150
   tessellationFactorFadeRange: 1850
-  refractionColor: {r: 0.022173876, g: 0.6931047, b: 0.7681513, a: 1}
+  refractionColor: {r: 0, g: 0.50888145, b: 0.6724432, a: 1}
   maxRefractionDistance: 3.5
   absorptionDistance: 81
-  scatteringColor: {r: 0.043993086, g: 0.41016114, b: 0.5600193, a: 1}
-  ambientScattering: 0.8
-  heightScattering: 0.621
+  scatteringColor: {r: 0, g: 0.026241213, b: 0.11193242, a: 1}
+  ambientScattering: 0.7
+  heightScattering: 0.8
   displacementScattering: 0.1
   directLightTipScattering: 0.6
   directLightBodyScattering: 0.5
-  maximumHeightOverride: 0
+  maximumHeightOverride: 25
   caustics: 1
   causticsIntensity: 2
   causticsPlaneBlendDistance: 1
   causticsResolution: 1024
   causticsBand: 2
   virtualPlaneDistance: 3
-  causticsTilingFactor: 5
+  causticsTilingFactor: 12
   causticsDirectionalShadow: 1
   causticsDirectionalShadowDimmer: 0
   renderingLayerMask: 257
@@ -8269,12 +8269,12 @@ MonoBehaviour:
   volumeDepth: 50
   volumeHeight: 0
   volumePrority: 0
-  absorptionDistanceMultiplier: 1
+  absorptionDistanceMultiplier: 10
   underWaterAmbientProbeContribution: 1
   underWaterScatteringColorMode: 0
   underWaterScatteringColor: {r: 0, g: 0.26999986, b: 0.22999984, a: 1}
   underWaterRefraction: 1
-  decalRegionSize: {x: 200, y: 200}
+  decalRegionSize: {x: 300, y: 300}
   decalRegionAnchor: {fileID: 0}
   supportLargeCurrent: 0
   largeCurrentRes: 512
@@ -8346,23 +8346,23 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  repetitionSize: 25
+  repetitionSize: 1612
   largeOrientationValue: 0
-  largeWindSpeed: 20
-  largeChaos: 0.85
-  largeBand0Multiplier: 0.476
+  largeWindSpeed: 12
+  largeChaos: 0.3
+  largeBand0Multiplier: 1
   largeBand0FadeMode: 1
   largeBand0FadeStart: 1500
   largeBand0FadeDistance: 3000
-  largeBand1Multiplier: 0.667
+  largeBand1Multiplier: 1
   largeBand1FadeMode: 1
   largeBand1FadeStart: 300
   largeBand1FadeDistance: 800
   ripples: 1
   ripplesMotionMode: 0
   ripplesOrientationValue: 0
-  ripplesWindSpeed: 10
-  ripplesChaos: 0.493
+  ripplesWindSpeed: 7
+  ripplesChaos: 0.3
   ripplesFadeMode: 1
   ripplesFadeStart: 50
   ripplesFadeDistance: 200
