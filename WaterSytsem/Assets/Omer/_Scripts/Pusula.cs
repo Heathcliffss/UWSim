@@ -2,21 +2,23 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class NewMonoBehaviourScript : MonoBehaviour
-{ 
-
-    [Header("UI Objects")]
-    public RectTransform compassImage; // UI'daki Pusula Resminin RectTransform'unu buraya sürükle
+{
+    // Buraya UI'daki pusula resmini sürükle
+    public RectTransform compassImage;
 
     void Update()
     {
-        // Robotun Y eksenindeki dönüşünü alıyoruz (0-360 arası)
-        float headingAngle = transform.eulerAngles.y;
+        // 1. Robotun dünya üzerindeki gerçek Y dönüşünü alıyoruz
+        float currentYRotation = transform.eulerAngles.y;
 
-        // Pusula resmi, robotun dönüşünün TERSİNE dönmelidir.
-        // Robot sağa dönerse (N -> E -> S), resim sola dönmeli ki 'N' (Kuzey) hep aynı yönü göstersin (teoride).
-        // Sen "direk bu dönsede olur" dediğin için tam olarak bunu yapacağız.
-        // North'un (Kuzey) resmin üstünde (0 derece) olduğunu varsayıyoruz.
+        // 2. Konsola yazdıralım ki dönüp dönmediğini 'Console' sekmesinden görelim
+        // Debug.Log("Robot Dönüşü: " + currentYRotation);
 
-        compassImage.localRotation = Quaternion.Euler(0, 0, -headingAngle);
+        if (compassImage != null)
+        {
+            // 3. Pusula resmini robotun tam tersi yönünde döndürüyoruz
+            // Eğer resim ters yöne dönüyorsa başındaki '-' işaretini kaldırabilirsin
+            compassImage.localRotation = Quaternion.Euler(0, 0, -currentYRotation);
+        }
     }
 }
