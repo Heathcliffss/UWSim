@@ -18318,8 +18318,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 227822965}
-  offset: {x: 0, y: 2, z: 20}
-  smoothSpeed: 15
+  offset: {x: 0, y: 2, z: -17}
+  smoothSpeed: 20
 --- !u!1001 &2005136552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20128,11 +20128,19 @@ PrefabInstance:
       objectReference: {fileID: 1260424828}
     - target: {fileID: 454638209460632988, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
       propertyPath: rollTorque
-      value: 10
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 454638209460632988, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
       propertyPath: turnTorque
-      value: 12
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 454638209460632988, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
+      propertyPath: forwardThrust
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 454638209460632988, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
+      propertyPath: verticalThrust
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 1446230931622105782, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
       propertyPath: m_LocalPosition.x
