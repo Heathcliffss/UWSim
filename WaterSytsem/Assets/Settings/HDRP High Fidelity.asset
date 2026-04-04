@@ -65,7 +65,7 @@ MonoBehaviour:
     supportSurfaceGradient: 0
     decalNormalBufferHP: 0
     supportHighQualityLineRendering: 1
-    highQualityLineRenderingMemoryBudget: 128
+    highQualityLineRenderingMemoryBudget: 256
     msaaSampleCount: 1
     supportMotionVectors: 1
     supportScreenSpaceLensFlare: 1
@@ -76,7 +76,7 @@ MonoBehaviour:
     lightProbeSystem: 1
     oldLightProbeSystem: 1
     probeVolumeMemoryBudget: 1024
-    supportProbeVolumeGPUStreaming: 0
+    supportProbeVolumeGPUStreaming: 1
     supportProbeVolumeDiskStreaming: 0
     probeVolumeSHBands: 1
     supportProbeVolumeScenarios: 0
@@ -165,25 +165,25 @@ MonoBehaviour:
     dynamicResolutionSettings:
       enabled: 0
       useMipBias: 0
-      advancedUpscalersByPriority: 
-      DLSSPerfQualitySetting: 0
+      advancedUpscalersByPriority: 0001
+      DLSSPerfQualitySetting: 1
       DLSSInjectionPoint: 0
       TAAUInjectionPoint: 0
       STPInjectionPoint: 0
       defaultInjectionPoint: 2
-      DLSSUseOptimalSettings: 0
-      DLSSSharpness: 0
+      DLSSUseOptimalSettings: 1
+      DLSSSharpness: 0.413
       FSR2EnableSharpness: 0
       FSR2Sharpness: 0
       FSR2UseOptimalSettings: 0
       FSR2QualitySetting: 0
       FSR2InjectionPoint: 0
-      fsrOverrideSharpness: 0
+      fsrOverrideSharpness: 1
       fsrSharpness: 0.92
       maxPercentage: 100
-      minPercentage: 100
+      minPercentage: 70
       dynResType: 1
-      upsampleFilter: 1
+      upsampleFilter: 4
       forceResolution: 0
       forcedPercentage: 100
       lowResTransparencyMinimumThreshold: 0

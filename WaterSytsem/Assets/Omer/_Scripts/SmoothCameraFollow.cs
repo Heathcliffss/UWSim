@@ -2,26 +2,26 @@ using UnityEngine;
 
 public class SmoothCameraFollow : MonoBehaviour
 {
-    [Header("Takip Edilecek Araç")]
-    public Transform target; // Buraya Arac objeni sürükle
+    [Header("Takip Edilecek Araï¿½")]
+    public Transform target; // Buraya Arac objeni sï¿½rï¿½kle
 
-    [Header("Mesafe Ayarlarý")]
-    public Vector3 offset = new Vector3(0, 2, -5); // Aracýn ne kadar üstünde/arkasýnda duracak?
+    [Header("Mesafe Ayarlarï¿½")]
+    public Vector3 offset = new Vector3(0, 2, -5); // Aracï¿½n ne kadar ï¿½stï¿½nde/arkasï¿½nda duracak?
 
-    [Header("Yumuþatma (Düþük deðer = Daha yumuþak)")]
+    [Header("Yumuï¿½atma (Dï¿½ï¿½ï¿½k deï¿½er = Daha yumuï¿½ak)")]
     public float smoothSpeed = 10f;
 
-    void LateUpdate() // Render'dan hemen önce çalýþýr, titremeyi önler
+    void LateUpdate() // Render'dan hemen ï¿½nce ï¿½alï¿½ï¿½ï¿½r, titremeyi ï¿½nler
     {
         if (target == null) return;
 
-        // Aracýn pozisyonuna göre hedef konumu hesapla
+        // Aracï¿½n pozisyonuna gï¿½re hedef konumu hesapla
         Vector3 desiredPosition = target.TransformPoint(offset);
 
-        // Kamerayý o konuma yumuþak bir þekilde süzerek götür
+        // Kamerayï¿½ o konuma yumuï¿½ak bir ï¿½ekilde sï¿½zerek gï¿½tï¿½r
         transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
 
-        // Kamerayý her zaman araca baktýr
+        // Kamerayï¿½ her zaman araca baktï¿½r
         transform.LookAt(target);
     }
 }
