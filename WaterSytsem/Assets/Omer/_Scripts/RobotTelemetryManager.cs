@@ -4,7 +4,6 @@ using TMPro;
 public class RobotTelemetryManager : MonoBehaviour
 {
     [Header("Robot Bileşenleri")]
-    private RobotController robotCtrl;
     private ROSHydrodynamics hydro;
     private Rigidbody rb;
 
@@ -20,17 +19,16 @@ public class RobotTelemetryManager : MonoBehaviour
     void Start()
     {
         // Scriptleri aynı obje üzerinde oldukları için otomatik yakalıyoruz
-        robotCtrl = GetComponent<RobotController>();
         hydro = GetComponent<ROSHydrodynamics>();
         rb = GetComponent<Rigidbody>();
 
-        if (robotCtrl == null || hydro == null)
-            Debug.LogError("RobotTelemetryManager: Gerekli robot scriptleri bulunamadı!");
+        if (hydro == null || rb == null)
+            Debug.LogError("RobotTelemetryManager: Gerekli Rigidbody veya ROSHydrodynamics bulunamadı!");
     }
 
     void Update()
     {
-        if (robotCtrl == null || hydro == null) return;
+        if (hydro == null || rb == null) return;
 
         UpdateUI();
     }
@@ -44,10 +42,10 @@ public class RobotTelemetryManager : MonoBehaviour
         // 2. GERÇEK DERİNLİK (Hydrodynamics scriptindeki 'depth' verisi)
         if (depthText) depthText.text = "Depth (m): " + hydro.depth.ToString("F2");
 
-        // 3. PITCH VE ROLL (MerkezPivot'tan açısal veri)
-        // Açıları -180 ile 180 arasına normalize ederek gerçek bir cihaz ekranı gibi yapıyoruz
-        float p = NormalizeAngle(robotCtrl.merkezPivot.localEulerAngles.x);
-        float r = NormalizeAngle(robotCtrl.merkezPivot.localEulerAngles.z);
+        // 3. PITCH VE ROLL (Ana objenin Transform'undan açısal veri)
+        // Hata Düzeltildi: localEulerAngles yerine doğrudan ana objenin rotasyonu alınıyor.
+        float p = NormalizeAngle(transform.eulerAngles.x);
+        float r = NormalizeAngle(transform.eulerAngles.z);
 
         if (pitchText) pitchText.text = "Pitch: " + p.ToString("F1") + "°";
         if (rollText) rollText.text = "Roll: " + r.ToString("F1") + "°";
@@ -59,10 +57,12 @@ public class RobotTelemetryManager : MonoBehaviour
         }
     }
 
+    // Açıları -180 ile 180 arasına güvenli bir şekilde normalize eder
     float NormalizeAngle(float angle)
     {
-        angle %= 360;
-        if (angle > 180) angle -= 360;
+        angle %= 360f;
+        if (angle > 180f) angle -= 360f;
+        else if (angle < -180f) angle += 360f;
         return angle;
     }
 }
