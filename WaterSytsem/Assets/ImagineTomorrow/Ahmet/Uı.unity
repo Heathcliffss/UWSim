@@ -137,8 +137,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  offset: {x: 0, y: 2, z: 20}
+  fpvPoint: {fileID: 0}
+  thirdPersonOffset: {x: 0, y: 2, z: -5}
   smoothSpeed: 15
+  toggleViewAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: feef501c-9ff3-42b9-bf1a-b320e3b43a3f
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
 --- !u!1 &79367992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1583,6 +1596,19 @@ MonoBehaviour:
   pitchText: {fileID: 1702187605}
   rollText: {fileID: 596387490}
   horizonLine: {fileID: 179822548}
+--- !u!114 &1066077325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066077323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ed70e49de80bf4ebf091e5682ed4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  compassImage: {fileID: 1442961083}
 --- !u!1001 &1107778891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1923,6 +1949,7 @@ RectTransform:
   - {fileID: 849076661}
   - {fileID: 1702187604}
   - {fileID: 596387489}
+  - {fileID: 1442961083}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2754,6 +2781,78 @@ ReflectionProbe:
   m_UseOcclusionCulling: 1
   m_Importance: 1
   m_CustomBakedTexture: {fileID: 0}
+--- !u!1 &1442961082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1442961083}
+  - component: {fileID: 1442961085}
+  - component: {fileID: 1442961084}
+  m_Layer: 5
+  m_Name: Pusula
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1442961083
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442961082}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.825207, y: 2.825207, z: 2.825207}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1109400964}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 764, y: 373}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1442961084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442961082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 5fc7cd70a62797c4da76e6f899be44a6, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1442961085
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442961082}
+  m_CullTransparentMesh: 1
 --- !u!1 &1444286401
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,6 +3156,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8943280830566507593, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1066077324}
+    - targetCorrespondingSourceObject: {fileID: 8943280830566507593, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1066077325}
   m_SourcePrefab: {fileID: 100100000, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
 --- !u!1 &1702187603
 GameObject:

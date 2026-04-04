@@ -18353,7 +18353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 7079515234812720246}
   fpvPoint: {fileID: 1607029675}
-  thirdPersonOffset: {x: 0, y: 2, z: -5}
+  thirdPersonOffset: {x: 0, y: 2.1, z: -10}
   smoothSpeed: 20
   toggleViewAction:
     m_UseReference: 0
@@ -20183,19 +20183,19 @@ PrefabInstance:
       objectReference: {fileID: 1260424828}
     - target: {fileID: 454638209460632988, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
       propertyPath: rollTorque
-      value: 14
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 454638209460632988, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
       propertyPath: turnTorque
-      value: 20
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 454638209460632988, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
       propertyPath: forwardThrust
-      value: 60
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 454638209460632988, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
       propertyPath: verticalThrust
-      value: 55
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1446230931622105782, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
       propertyPath: m_LocalPosition.x
