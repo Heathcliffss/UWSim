@@ -6382,6 +6382,14 @@ PrefabInstance:
       propertyPath: m_TeleportInteractor
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5826056641483426609, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_MotionControllerModeEnded.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5826056641483426609, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_MotionControllerModeEnded.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5895826684305351068, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -18356,7 +18364,15 @@ MonoBehaviour:
       m_Id: 5c52cd87-890b-42d2-8e54-e4e646fcfdd3
       m_Processors: 
       m_Interactions: 
-      m_SingletonActionBindings: []
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 7024e267-909f-473e-8722-aa7046e3a989
+        m_Path: <OculusTouchController>{RightHand}/secondaryButton
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Toggle View
+        m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 0}
 --- !u!1001 &2005136552
@@ -20240,6 +20256,10 @@ PrefabInstance:
     - target: {fileID: 3215987246007254164, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
       propertyPath: m_SpotAngle
       value: 55.447056
+      objectReference: {fileID: 0}
+    - target: {fileID: 3508817169018817721, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 7482227286112831744, guid: a972b6359fc7fde4fa34f01ba398c806, type: 3}
       propertyPath: m_LocalPosition.x
