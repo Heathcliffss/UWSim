@@ -4,11 +4,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class RobotController : MonoBehaviour
 {
-    [Header("Referans Noktasý")]
-    [Tooltip("Aracýn içine koyduðumuz 'MerkezPivot' objesini buraya sürükle.")]
+    [Header("Referans NoktasÄ±")]
+    [Tooltip("Sadece aÄŸÄ±rlÄ±k merkezi iÃ§in kullanÄ±lÄ±r. DÃ¶nÃ¼ÅŸler robotun kendi ekseninden yapÄ±lÄ±r.")]
     public Transform merkezPivot;
 
-    [Header("Input Referanslarý")]
+    [Header("Input ReferanslarÄ±")]
     public InputActionReference leftJoystick;
     public InputActionReference rightJoystick;
     public InputActionReference leftTrigger;
@@ -16,14 +16,14 @@ public class RobotController : MonoBehaviour
     public InputActionReference leftGrip;
     public InputActionReference rightGrip;
 
-    [Header("Motor Ýtiþ Gücü (Thrust) Ayarlarý")]
+    [Header("Motor Ä°tki GÃ¼cÃ¼ (Thrust) AyarlarÄ±")]
     public float verticalThrust = 100f;
     public float forwardThrust = 50f;
 
-    [Header("Dönüþ Gücü (Torque) Ayarlarý")]
-    [Tooltip("Dönüþ hýzlarý daha kontrollü olmasý için yarý yarýya düþürüldü.")]
-    public float turnTorque = 7.5f;        // Sað/Sol dönme gücü (Yaw)
-    public float rollTorque = 10f;         // Kendi ekseninde yuvarlanma gücü (Roll)
+    [Header("DÃ¶nÃ¼ÅŸ GÃ¼cÃ¼ (Torque) AyarlarÄ±")]
+    [Tooltip("Suyun direncini kÄ±rmak iÃ§in bu deÄŸerler YÃœKSEK tutulmalÄ±!")]
+    public float turnTorque = 500f;        // SaÄŸa/Sola dÃ¶nme gÃ¼cÃ¼ (Yaw) - ARTTIRILDI
+    public float rollTorque = 300f;        // Kendi ekseninde yuvarlanma gÃ¼cÃ¼ (Roll) - ARTTIRILDI
 
     private Rigidbody rb;
 
@@ -31,13 +31,17 @@ public class RobotController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
+
+        // AÄŸÄ±rlÄ±k merkezini merkezPivot'a gÃ¶re ayarla (EÄŸer atanmÄ±ÅŸsa)
+        if (merkezPivot != null)
+        {
+            rb.centerOfMass = merkezPivot.localPosition;
+        }
     }
 
     void FixedUpdate()
     {
-        if (merkezPivot == null) return; // Güvenlik önlemi
-
-        // --- GÝRDÝLERÝ OKUMA ---
+        // --- GÄ°RDÄ°LERÄ° OKUMA ---
         float upDownInput = leftJoystick.action.ReadValue<Vector2>().y;
 
         float rotationInput = 0f;
@@ -54,23 +58,24 @@ public class RobotController : MonoBehaviour
         float rollRightInput = rightGrip.action.ReadValue<float>();
         float zRollMovement = rollLeftInput - rollRightInput;
 
-        // --- 1. HAREKET KUVVETÝ (Doðrudan MerkezPivot'un eksenlerine göre) ---
-        // Artýk AddRelativeForce yerine AddForce kullanýyoruz, çünkü yönü biz belirliyoruz.
-        Vector3 linearThrust = (merkezPivot.up * (upDownInput * verticalThrust)) +
-                               (merkezPivot.forward * (zMovement * forwardThrust));
+        // --- 1. HAREKET KUVVETÄ° (Lineer Ä°tki) ---
+        // AracÄ±n kendi ana transformunu (transform.up/forward) kullanÄ±yoruz.
+        Vector3 linearThrust = (transform.up * (upDownInput * verticalThrust)) +
+                               (transform.forward * (zMovement * forwardThrust));
 
         rb.AddForce(linearThrust, ForceMode.Force);
 
-        // --- 2. DÖNÜÞ KUVVETÝ (Doðrudan MerkezPivot'un eksenlerine göre) ---
+        // --- 2. DÃ–NÃœÅž KUVVETÄ° (AÃ§Ä±sal Ä°tki) ---
         float finalYawTorque = (Mathf.Abs(rotationInput) > 0.05f) ? rotationInput * turnTorque : 0f;
 
-        // Y ekseni etrafýnda saða/sola dönüþ (Yaw) ve Z ekseni etrafýnda yuvarlanma (Roll)
-        Vector3 angularThrust = (merkezPivot.up * finalYawTorque) +
-                                (merkezPivot.forward * zRollMovement * rollTorque);
+        // KRÄ°TÄ°K DEÄžÄ°ÅžÄ°KLÄ°K: DÃ¶nÃ¼ÅŸÃ¼ merkezPivot'tan DEÄžÄ°L, robotun KENDÄ° ekseninden (transform.up) alÄ±yoruz.
+        Vector3 angularThrust = (transform.up * finalYawTorque) +
+                                (transform.forward * zRollMovement * rollTorque);
 
         if (angularThrust != Vector3.zero)
         {
-            rb.AddTorque(angularThrust, ForceMode.Force);
+            // ForceMode.Acceleration kullanarak kÃ¼tle/hacim direncini aÅŸÄ±yor, anÄ±nda tepki vermesini saÄŸlÄ±yoruz.
+            rb.AddTorque(angularThrust, ForceMode.Acceleration);
         }
     }
 
