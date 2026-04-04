@@ -41,17 +41,16 @@ public class ROSHydrodynamics : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.linearDamping = 0f;
-        rb.angularDamping = 0f;
 
-        // Aracın ağırlık merkezini doğrudan senin koyduğun o Pivot noktasına eşitliyoruz!
+        // KRİTİK AYAR: Ağırlık merkezini Pivot'un 30 cm altına çekiyoruz.
+        // Bu, aracın her zaman dik durmasını sağlar (Hacıyatmaz Etkisi).
         if (merkezPivot != null)
         {
-            rb.centerOfMass = merkezPivot.localPosition;
+            rb.centerOfMass = merkezPivot.localPosition + new Vector3(0f, -0.3f, 0f);
         }
         else
         {
-            rb.centerOfMass = new Vector3(0f, -0.15f, 0f);
+            rb.centerOfMass = new Vector3(0f, -0.3f, 0f);
         }
     }
 

@@ -21,7 +21,7 @@ MonoBehaviour:
     m_Value: 30
   ambientProbeDimmer:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 1
 --- !u!114 &-8845446057161508543
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -39,14 +39,14 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0
   meteringMode:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 2
   luminanceSource:
     m_OverrideState: 0
     m_Value: 1
   fixedExposure:
     m_OverrideState: 1
-    m_Value: 13
+    m_Value: 10.616352
   compensation:
     m_OverrideState: 0
     m_Value: -0.9
@@ -589,10 +589,10 @@ MonoBehaviour:
     m_Value: 0
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 60
+    m_Value: 0
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 256
+    m_Value: 400
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 1
@@ -604,7 +604,7 @@ MonoBehaviour:
     m_Value: 1
   depthExtent:
     m_OverrideState: 1
-    m_Value: 32
+    m_Value: 256
   denoisingMode:
     m_OverrideState: 1
     m_Value: 2
