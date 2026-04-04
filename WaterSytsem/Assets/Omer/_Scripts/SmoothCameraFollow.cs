@@ -2,26 +2,28 @@ using UnityEngine;
 
 public class SmoothCameraFollow : MonoBehaviour
 {
-    [Header("Takip Edilecek Araç")]
-    public Transform target; // Buraya Arac objeni sürükle
+    [Header("Takip Edilecek AraÃ§")]
+    public Transform target; 
+    
+    [Header("Mesafe AyarlarÄ±")]
+    [Tooltip("Tam iÃ§inden bakmak iÃ§in 0,0,0 yapÄ±n.")]
+    public Vector3 offset = Vector3.zero; 
+    
+    [Header("YumuÅŸatma")]
+    public float smoothSpeed = 20f;
 
-    [Header("Mesafe Ayarları")]
-    public Vector3 offset = new Vector3(0, 2, -5); // Aracın ne kadar üstünde/arkasında duracak?
-
-    [Header("Yumuşatma (Düşük değer = Daha yumuşak)")]
-    public float smoothSpeed = 10f;
-
-    void LateUpdate() // Render'dan hemen önce çalışır, titremeyi önler
+    void LateUpdate() 
     {
         if (target == null) return;
 
-        // Aracın pozisyonuna göre hedef konumu hesapla
+        // Hedef pozisyonu hesapla
         Vector3 desiredPosition = target.TransformPoint(offset);
-
-        // Kamerayı o konuma yumuşak bir şekilde süzerek götür
+        
+        // Pozisyonu yumuÅŸakÃ§a takip et
         transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-
-        // Kamerayı her zaman araca baktır
-        transform.LookAt(target);
+        
+        // ARTIK LOOKAT YERÄ°NE: AracÄ±n kendi dÃ¶nÃ¼ÅŸÃ¼nÃ¼ (rotasyonunu) kopyala
+        // Bu sayede tam olarak robotun baktÄ±ÄŸÄ± yere bakarsÄ±n.
+        transform.rotation = Quaternion.Slerp(transform.rotation, target.rotation, smoothSpeed * Time.deltaTime);
     }
 }
