@@ -1154,8 +1154,8 @@ RectTransform:
   - {fileID: 1448763248}
   m_Father: {fileID: 1038113068}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9281,7 +9281,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 0
   m_TargetGraphic: {fileID: 122399026}
-  m_FillRect: {fileID: 1448763248}
+  m_FillRect: {fileID: 107533579}
   m_HandleRect: {fileID: 122399025}
   m_Direction: 0
   m_MinValue: 0
@@ -13813,7 +13813,7 @@ RectTransform:
   m_Father: {fileID: 107533579}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -18512,7 +18512,7 @@ GameObject:
   - component: {fileID: 1834351347}
   m_Layer: 0
   m_Name: PetrolBorusu
-  m_TagString: Untagged
+  m_TagString: Cable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 18
@@ -22825,7 +22825,10 @@ MonoBehaviour:
   pitchText: {fileID: 491708915}
   rollText: {fileID: 2034600554}
   liveLocationText: {fileID: 593680600}
+  signalSlider: {fileID: 1038113069}
+  signalFillImage: {fileID: 1448763249}
   updateInterval: 0.1
+  cableTag: Cable
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
