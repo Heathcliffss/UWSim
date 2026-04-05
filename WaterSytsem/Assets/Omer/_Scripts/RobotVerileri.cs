@@ -1,76 +1,93 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class RobotVerileri : MonoBehaviour
 {
     [Header("Bileşenler")]
     private Rigidbody rb;
+    private GameObject[] cableSegments;
 
     [Header("UI Metinleri (TMP)")]
     public TextMeshProUGUI speedText;
     public TextMeshProUGUI depthText;
     public TextMeshProUGUI pitchText;
     public TextMeshProUGUI rollText;
-    public TextMeshProUGUI liveLocationText; // Anlık Konum Metni
+    public TextMeshProUGUI liveLocationText;
+
+    [Header("Manyetik Sensör UI")]
+    public Slider signalSlider;
+    public Image signalFillImage; // Slider'ın 'Fill' objesi
 
     [Header("Performans Ayarları")]
-    [Tooltip("UI kaç saniyede bir güncellensin? 0.1f = Saniyede 10 kez. VR için idealdir.")]
+    [Range(0.01f, 0.5f)]
     public float updateInterval = 0.1f;
     private float nextUpdateTime;
 
-    [Header("Kuzey Denizi Koordinat Ayarları")]
+    [Header("Sektörel Veri Ayarları")]
     private const double baseLat = 54.123400;
     private const double baseLong = 2.567800;
     private const double meterToDegree = 0.000009;
+    public string cableTag = "Cable";
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        // Sahnedeki kabloları bir kez bulup listeye alıyoruz (Performans için çok kritik!)
+        cableSegments = GameObject.FindGameObjectsWithTag(cableTag);
     }
 
     void Update()
     {
-        // PERFORMANS KİLİDİ: Saniyede sadece 10 kez çalışır, işlemciyi yormaz.
+        // VR'da kasmayı önleyen ana kilit: Her karede değil, aralıklarla çalış
         if (Time.time >= nextUpdateTime)
         {
-            UpdateTelemetry();
+            UpdateAllData();
             nextUpdateTime = Time.time + updateInterval;
         }
     }
 
-    void UpdateTelemetry()
+    void UpdateAllData()
     {
         if (rb == null) return;
 
-        // 1. HIZ HESAPLAMA
+        // --- 1. TELEMETRİ HESAPLAMALARI ---
         float speed = rb.linearVelocity.magnitude;
-        if (speedText != null)
-            speedText.SetText("Hız (m/s): {0:F2}", speed);
-
-        // 2. DERİNLİK HESAPLAMA (Deniz seviyesi 0 kabul edilir)
         float depth = Mathf.Abs(transform.position.y);
-        if (depthText != null)
-            depthText.SetText("Depth (m): {0:F2}", depth);
-
-        // 3. PITCH & ROLL
         float p = NormalizeAngle(transform.eulerAngles.x);
         float r = NormalizeAngle(transform.eulerAngles.z);
 
-        if (pitchText != null) pitchText.SetText("Pitch: {0:F1}°", p);
-        if (rollText != null) rollText.SetText("Roll: {0:F1}°", r);
+        // --- 2. MANYETİK SİNYAL HESAPLAMASI (En Yakın Nokta) ---
+        float closestDist = float.MaxValue;
+        if (cableSegments != null && cableSegments.Length > 0)
+        {
+            foreach (GameObject segment in cableSegments)
+            {
+                // sqrMagnitude kullanmak Vector3.Distance'tan daha hızlıdır (kök almaz)
+                float sqrDist = (transform.position - segment.transform.position).sqrMagnitude;
+                if (sqrDist < closestDist) closestDist = sqrDist;
+            }
+            closestDist = Mathf.Sqrt(closestDist); // Sadece en yakın olanın kökünü alıyoruz
+        }
 
-        // 4. ANLIK KONUM (Hata Düzeltildi: (float) casting eklendi)
+        float signalStrength = Mathf.Clamp(100f - (closestDist * 10f), 0f, 100f);
+
+        // --- 3. KOORDİNAT HESAPLAMASI ---
         double currentLat = baseLat + (transform.position.z * meterToDegree);
         double currentLong = baseLong + (transform.position.x * meterToDegree);
 
-        if (liveLocationText != null)
-        {
-            // SetText double kabul etmediği için (float) ile dönüştürüyoruz
-            liveLocationText.SetText("LAT: {0:F6} N\nLONG: {1:F6} E", (float)currentLat, (float)currentLong);
-        }
+        // --- 4. UI GÜNCELLEME (SetText ile sıfır bellek yükü) ---
+        if (speedText) speedText.SetText("Hız: {0:F2} m/s", speed);
+        if (depthText) depthText.SetText("Depth: {0:F2} m", depth);
+        if (pitchText) pitchText.SetText("Pitch: {0:F1}°", p);
+        if (rollText) rollText.SetText("Roll: {0:F1}°", r);
+        if (liveLocationText) liveLocationText.SetText("LAT: {0:F6} N\nLONG: {1:F6} E", (float)currentLat, (float)currentLong);
+
+        // Manyetik Slider ve Renk Güncelleme
+        if (signalSlider) signalSlider.value = signalStrength;
+        if (signalFillImage) signalFillImage.color = Color.Lerp(Color.red, Color.green, signalStrength / 100f);
     }
 
-    // Açıları -180 ile 180 arasına güvenli bir şekilde normalize eder
     float NormalizeAngle(float angle)
     {
         angle %= 360f;
