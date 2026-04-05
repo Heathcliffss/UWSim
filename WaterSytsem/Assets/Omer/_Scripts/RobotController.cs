@@ -4,11 +4,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class RobotController : MonoBehaviour
 {
-    [Header("Referans Noktasý")]
-    [Tooltip("Aracýn içine koyduðumuz 'MerkezPivot' objesini buraya sürükle.")]
+    [Header("Referans NoktasÄ±")]
+    [Tooltip("Sadece aÄŸÄ±rlÄ±k merkezi iÃ§in kullanÄ±lÄ±r. DÃ¶nÃ¼ÅŸler robotun kendi ekseninden yapÄ±lÄ±r.")]
     public Transform merkezPivot;
 
-    [Header("Input Referanslarý")]
+    [Header("Input ReferanslarÄ±")]
     public InputActionReference leftJoystick;
     public InputActionReference rightJoystick;
     public InputActionReference leftTrigger;
@@ -16,14 +16,18 @@ public class RobotController : MonoBehaviour
     public InputActionReference leftGrip;
     public InputActionReference rightGrip;
 
-    [Header("Motor Ýtiþ Gücü (Thrust) Ayarlarý")]
+    [Header("Motor Ä°tki GÃ¼cÃ¼ (Thrust) AyarlarÄ±")]
     public float verticalThrust = 100f;
     public float forwardThrust = 50f;
 
-    [Header("Dönüþ Gücü (Torque) Ayarlarý")]
-    [Tooltip("Dönüþ hýzlarý daha kontrollü olmasý için yarý yarýya düþürüldü.")]
-    public float turnTorque = 7.5f;        // Sað/Sol dönme gücü (Yaw)
-    public float rollTorque = 10f;         // Kendi ekseninde yuvarlanma gücü (Roll)
+    [Header("DÃ¶nÃ¼ÅŸ GÃ¼cÃ¼ (Torque) AyarlarÄ±")]
+    public float turnTorque = 500f;        // SaÄŸa/Sola dÃ¶nme gÃ¼cÃ¼ (Yaw)
+    public float rollTorque = 300f;        // Kendi ekseninde yuvarlanma gÃ¼cÃ¼ (Roll)
+    public float pitchTorque = 400f;       // YENÄ°: AÅŸaÄŸÄ±/YukarÄ± eÄŸilme gÃ¼cÃ¼ (Pitch)
+
+    [Header("Otomatik Dengeleme (Stabilization)")]
+    [Tooltip("Robotun joystick bÄ±rakÄ±ldÄ±ÄŸÄ±nda kendini yere paralel hale getirme gÃ¼cÃ¼.")]
+    public float stabilizeForce = 80f;     // YENÄ°: HacÄ±yatmaz etkisi gÃ¼cÃ¼
 
     private Rigidbody rb;
 
@@ -31,20 +35,32 @@ public class RobotController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
+
+        // AÄŸÄ±rlÄ±k merkezini merkezPivot'a gÃ¶re ayarla
+        if (merkezPivot != null)
+        {
+            rb.centerOfMass = merkezPivot.localPosition;
+        }
     }
 
     void FixedUpdate()
     {
-        if (merkezPivot == null) return; // Güvenlik önlemi
-
-        // --- GÝRDÝLERÝ OKUMA ---
+        // --- GÄ°RDÄ°LERÄ° OKUMA ---
         float upDownInput = leftJoystick.action.ReadValue<Vector2>().y;
 
         float rotationInput = 0f;
+        float pitchInput = 0f; // YENÄ°: EÄŸilme girdisi
+
         if (rightJoystick.action.expectedControlType == "Vector2")
-            rotationInput = rightJoystick.action.ReadValue<Vector2>().x;
+        {
+            Vector2 rightJoyValue = rightJoystick.action.ReadValue<Vector2>();
+            rotationInput = rightJoyValue.x; // SaÄŸa/Sola dÃ¶n (Yaw)
+            pitchInput = rightJoyValue.y;    // YENÄ°: AÅŸaÄŸÄ±/YukarÄ± eÄŸil (Pitch)
+        }
         else
+        {
             rotationInput = rightJoystick.action.ReadValue<float>();
+        }
 
         float forwardInput = rightTrigger.action.ReadValue<float>();
         float backwardInput = leftTrigger.action.ReadValue<float>();
@@ -54,24 +70,36 @@ public class RobotController : MonoBehaviour
         float rollRightInput = rightGrip.action.ReadValue<float>();
         float zRollMovement = rollLeftInput - rollRightInput;
 
-        // --- 1. HAREKET KUVVETÝ (Doðrudan MerkezPivot'un eksenlerine göre) ---
-        // Artýk AddRelativeForce yerine AddForce kullanýyoruz, çünkü yönü biz belirliyoruz.
-        Vector3 linearThrust = (merkezPivot.up * (upDownInput * verticalThrust)) +
-                               (merkezPivot.forward * (zMovement * forwardThrust));
+        // --- 1. HAREKET KUVVETÄ° (Lineer Ä°tki) ---
+        Vector3 linearThrust = (transform.up * (upDownInput * verticalThrust)) +
+                               (transform.forward * (zMovement * forwardThrust));
 
         rb.AddForce(linearThrust, ForceMode.Force);
 
-        // --- 2. DÖNÜÞ KUVVETÝ (Doðrudan MerkezPivot'un eksenlerine göre) ---
+        // --- 2. DÃ–NÃœÅž KUVVETÄ° (AÃ§Ä±sal Ä°tki) ---
         float finalYawTorque = (Mathf.Abs(rotationInput) > 0.05f) ? rotationInput * turnTorque : 0f;
+        
+        // Pitch girdisi (YukarÄ± itince burun aÅŸaÄŸÄ± insin diye doÄŸrudan kullanÄ±yoruz. 
+        // EÄŸer ters gelirse 'pitchInput' Ã¶nÃ¼ne eksi (-) koyabilirsin: -pitchInput * pitchTorque)
+        float finalPitchTorque = (Mathf.Abs(pitchInput) > 0.05f) ? pitchInput * pitchTorque : 0f;
 
-        // Y ekseni etrafýnda saða/sola dönüþ (Yaw) ve Z ekseni etrafýnda yuvarlanma (Roll)
-        Vector3 angularThrust = (merkezPivot.up * finalYawTorque) +
-                                (merkezPivot.forward * zRollMovement * rollTorque);
+        // Y (Yaw), Z (Roll) ve X (Pitch) eksenlerindeki torklarÄ± birleÅŸtiriyoruz
+        Vector3 angularThrust = (transform.up * finalYawTorque) +
+                                (transform.forward * zRollMovement * rollTorque) +
+                                (transform.right * finalPitchTorque); // YENÄ°: X ekseni etrafÄ±nda eÄŸilme
 
         if (angularThrust != Vector3.zero)
         {
-            rb.AddTorque(angularThrust, ForceMode.Force);
+            rb.AddTorque(angularThrust, ForceMode.Acceleration);
         }
+
+        // --- 3. OTOMATÄ°K DENGELEME (HacÄ±yatmaz Etkisi) ---
+        // DÃ¼nya'nÄ±n 'YukarÄ±' yÃ¶nÃ¼ ile robotun kendi 'YukarÄ±' yÃ¶nÃ¼ arasÄ±ndaki farkÄ± hesaplar
+        // Bu farkÄ± kapatacak bir karÅŸÄ± tork (righting moment) uygular.
+        Vector3 rightingTorque = Vector3.Cross(transform.up, Vector3.up) * stabilizeForce;
+        
+        // Dengeleme kuvvetini uygula
+        rb.AddTorque(rightingTorque, ForceMode.Acceleration);
     }
 
     private void OnEnable()
