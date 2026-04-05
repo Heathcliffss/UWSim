@@ -18496,6 +18496,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e99b88e42c4d64a8f0fecc066d9b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
+  target: {fileID: 227822965}
+  offset: {x: 0, y: 2, z: -17}
+  smoothSpeed: 20
+=======
   target: {fileID: 7079515234812720246}
   fpvPoint: {fileID: 1607029675}
   thirdPersonOffset: {x: 0, y: 2.1, z: -10}
@@ -18520,6 +18525,7 @@ MonoBehaviour:
         m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 0}
+>>>>>>> Omer
 --- !u!1001 &2005136552
 PrefabInstance:
   m_ObjectHideFlags: 0
