@@ -21,9 +21,13 @@ public class RobotController : MonoBehaviour
     public float forwardThrust = 50f;
 
     [Header("Dönüş Gücü (Torque) Ayarları")]
-    [Tooltip("Suyun direncini kırmak için bu değerler YÜKSEK tutulmalı!")]
-    public float turnTorque = 500f;        // Sağa/Sola dönme gücü (Yaw) - ARTTIRILDI
-    public float rollTorque = 300f;        // Kendi ekseninde yuvarlanma gücü (Roll) - ARTTIRILDI
+    public float turnTorque = 500f;        // Sağa/Sola dönme gücü (Yaw)
+    public float rollTorque = 300f;        // Kendi ekseninde yuvarlanma gücü (Roll)
+    public float pitchTorque = 400f;       // YENİ: Aşağı/Yukarı eğilme gücü (Pitch)
+
+    [Header("Otomatik Dengeleme (Stabilization)")]
+    [Tooltip("Robotun joystick bırakıldığında kendini yere paralel hale getirme gücü.")]
+    public float stabilizeForce = 80f;     // YENİ: Hacıyatmaz etkisi gücü
 
     private Rigidbody rb;
 
@@ -32,7 +36,7 @@ public class RobotController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
 
-        // Ağırlık merkezini merkezPivot'a göre ayarla (Eğer atanmışsa)
+        // Ağırlık merkezini merkezPivot'a göre ayarla
         if (merkezPivot != null)
         {
             rb.centerOfMass = merkezPivot.localPosition;
@@ -45,10 +49,18 @@ public class RobotController : MonoBehaviour
         float upDownInput = leftJoystick.action.ReadValue<Vector2>().y;
 
         float rotationInput = 0f;
+        float pitchInput = 0f; // YENİ: Eğilme girdisi
+
         if (rightJoystick.action.expectedControlType == "Vector2")
-            rotationInput = rightJoystick.action.ReadValue<Vector2>().x;
+        {
+            Vector2 rightJoyValue = rightJoystick.action.ReadValue<Vector2>();
+            rotationInput = rightJoyValue.x; // Sağa/Sola dön (Yaw)
+            pitchInput = rightJoyValue.y;    // YENİ: Aşağı/Yukarı eğil (Pitch)
+        }
         else
+        {
             rotationInput = rightJoystick.action.ReadValue<float>();
+        }
 
         float forwardInput = rightTrigger.action.ReadValue<float>();
         float backwardInput = leftTrigger.action.ReadValue<float>();
@@ -59,7 +71,6 @@ public class RobotController : MonoBehaviour
         float zRollMovement = rollLeftInput - rollRightInput;
 
         // --- 1. HAREKET KUVVETİ (Lineer İtki) ---
-        // Aracın kendi ana transformunu (transform.up/forward) kullanıyoruz.
         Vector3 linearThrust = (transform.up * (upDownInput * verticalThrust)) +
                                (transform.forward * (zMovement * forwardThrust));
 
@@ -67,16 +78,28 @@ public class RobotController : MonoBehaviour
 
         // --- 2. DÖNÜŞ KUVVETİ (Açısal İtki) ---
         float finalYawTorque = (Mathf.Abs(rotationInput) > 0.05f) ? rotationInput * turnTorque : 0f;
+        
+        // Pitch girdisi (Yukarı itince burun aşağı insin diye doğrudan kullanıyoruz. 
+        // Eğer ters gelirse 'pitchInput' önüne eksi (-) koyabilirsin: -pitchInput * pitchTorque)
+        float finalPitchTorque = (Mathf.Abs(pitchInput) > 0.05f) ? pitchInput * pitchTorque : 0f;
 
-        // KRİTİK DEĞİŞİKLİK: Dönüşü merkezPivot'tan DEĞİL, robotun KENDİ ekseninden (transform.up) alıyoruz.
+        // Y (Yaw), Z (Roll) ve X (Pitch) eksenlerindeki torkları birleştiriyoruz
         Vector3 angularThrust = (transform.up * finalYawTorque) +
-                                (transform.forward * zRollMovement * rollTorque);
+                                (transform.forward * zRollMovement * rollTorque) +
+                                (transform.right * finalPitchTorque); // YENİ: X ekseni etrafında eğilme
 
         if (angularThrust != Vector3.zero)
         {
-            // ForceMode.Acceleration kullanarak kütle/hacim direncini aşıyor, anında tepki vermesini sağlıyoruz.
             rb.AddTorque(angularThrust, ForceMode.Acceleration);
         }
+
+        // --- 3. OTOMATİK DENGELEME (Hacıyatmaz Etkisi) ---
+        // Dünya'nın 'Yukarı' yönü ile robotun kendi 'Yukarı' yönü arasındaki farkı hesaplar
+        // Bu farkı kapatacak bir karşı tork (righting moment) uygular.
+        Vector3 rightingTorque = Vector3.Cross(transform.up, Vector3.up) * stabilizeForce;
+        
+        // Dengeleme kuvvetini uygula
+        rb.AddTorque(rightingTorque, ForceMode.Acceleration);
     }
 
     private void OnEnable()
