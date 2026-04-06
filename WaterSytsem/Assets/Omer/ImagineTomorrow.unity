@@ -10291,7 +10291,7 @@ Transform:
   m_GameObject: {fileID: 1138085118}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.368, y: -41.350006, z: 5.683}
+  m_LocalPosition: {x: -12.368, y: -38.12, z: 5.683}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -11163,7 +11163,7 @@ MonoBehaviour:
   refractionColor: {r: 0.009721204, g: 0.21586053, b: 0.21586053, a: 1}
   maxRefractionDistance: 0.46
   absorptionDistance: 7.6
-  scatteringColor: {r: 0.11047637, g: 0.2411783, b: 0.23948982, a: 1}
+  scatteringColor: {r: 0.10897018, g: 0.2603273, b: 0.2558233, a: 1}
   ambientScattering: 0.333
   heightScattering: 0.31
   displacementScattering: 0.1
@@ -11190,7 +11190,7 @@ MonoBehaviour:
   volumeDepth: 50
   volumeHeight: 0
   volumePrority: 0
-  absorptionDistanceMultiplier: 4.81
+  absorptionDistanceMultiplier: 5.44
   underWaterAmbientProbeContribution: 1
   underWaterScatteringColorMode: 0
   underWaterScatteringColor: {r: 0, g: 0.26999986, b: 0.22999984, a: 1}
