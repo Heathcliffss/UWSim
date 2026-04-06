@@ -68,7 +68,7 @@ MonoBehaviour:
     highQualityLineRenderingMemoryBudget: 128
     msaaSampleCount: 1
     supportMotionVectors: 1
-    supportScreenSpaceLensFlare: 1
+    supportScreenSpaceLensFlare: 0
     supportDataDrivenLensFlare: 1
     supportDitheringCrossFade: 1
     supportRuntimeAOVAPI: 0
@@ -545,4 +545,4 @@ MonoBehaviour:
   m_ObsoleteDiffusionProfileSettingsList:
   - {fileID: 0}
   - {fileID: 0}
-  m_PrefilterUseLegacyLightmaps: 0
+  m_PrefilterUseLegacyLightmaps: 1
