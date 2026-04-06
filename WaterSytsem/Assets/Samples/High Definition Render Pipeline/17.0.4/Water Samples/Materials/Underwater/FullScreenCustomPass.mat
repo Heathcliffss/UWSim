@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: FullScreenCustomPass
-  m_Shader: {fileID: -6465566751694194690, guid: 37350a2b48e9cc04892c9129e948a51d,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 37350a2b48e9cc04892c9129e948a51d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -68,7 +67,7 @@ Material:
     - _Static_Droplets: 1
     - _Static_Droplets_Intensity: 0.025
     - _Tiling: 0.5
-    - _Waterline_Height: 0.1
+    - _Waterline_Height: 0.5
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
