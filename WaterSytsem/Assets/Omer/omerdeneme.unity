@@ -180312,7 +180312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 2056594469}
   fpvPoint: {fileID: 1164739491}
-  thirdPersonOffset: {x: 0, y: 0.17, z: 0.05}
+  thirdPersonOffset: {x: 0, y: 0.98, z: -0.41}
   smoothSpeed: 20
   toggleViewAction:
     m_UseReference: 0
@@ -213166,8 +213166,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.056, y: 0.04717058, z: 0.025784204}
-  m_Center: {x: 0, y: 0.0014147096, z: 0.017152742}
+  m_Size: {x: 0.57, y: 0.24932575, z: 0.4}
+  m_Center: {x: 0, y: 0.17699671, z: 0.017152742}
 --- !u!114 &2056594466
 MonoBehaviour:
   m_ObjectHideFlags: 0
