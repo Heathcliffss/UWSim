@@ -207,23 +207,14 @@ MonoBehaviour:
     - model: {fileID: 114063133802684794}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661615170}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615192}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661615214}
-      id: 0
-      isStickyNote: 0
   stickyNoteInfos: []
   categories: []
   uiBounds:
     serializedVersion: 2
     x: 678
-    y: -492
-    width: 476
-    height: 2109
+    y: -493
+    width: 478
+    height: 2105
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1427,7 +1418,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 2
+      m_SerializableObject: 5
     m_Space: -1
   m_Property:
     name: B
