@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 208572230}
   - component: {fileID: 208572229}
   - component: {fileID: 208572228}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2477,7 +2477,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1159316078}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 621fa0688781c8c4589fa1869eee91ee, type: 3}
   m_Name: 
@@ -2525,8 +2525,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.57, y: 0.24932575, z: 0.4}
-  m_Center: {x: 0, y: 0.17699671, z: 0.017152742}
+  m_Size: {x: 0.57, y: 0.23245049, z: 0.4}
+  m_Center: {x: 0, y: 0.17921162, z: 0.017152742}
 --- !u!114 &1159316083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2539,7 +2539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8244bf075d7b7149bec50fda0265abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetWaterSurface: {fileID: 0}
+  targetWaterSurface: {fileID: 1260424828}
   vehicleHeight: 0.2
   vehicleVolume: 0.00978
   atmosphericPressure: 101325
@@ -2572,11 +2572,11 @@ MonoBehaviour:
   rightTrigger: {fileID: 7904272356298805229, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   leftGrip: {fileID: 6558622148059887818, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightGrip: {fileID: -1758520528963094988, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  verticalThrust: 40
-  forwardThrust: 12
-  turnTorque: 10
-  rollTorque: 3
-  pitchTorque: 10
+  verticalThrust: 25
+  forwardThrust: 25
+  turnTorque: 7
+  rollTorque: 8
+  pitchTorque: 7
   stabilizeForce: 4
 --- !u!54 &1159316085
 Rigidbody:
@@ -2895,7 +2895,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1251305698
 MonoBehaviour:
   m_ObjectHideFlags: 0
