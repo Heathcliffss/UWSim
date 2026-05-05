@@ -60,7 +60,7 @@ public class GazeboDataReceiver : MonoBehaviour
                         // KOORDİNAT DÖNÜŞÜMÜ (ROS / Gazebo -> Unity)
                         // Simülasyonun Z-up veya Y-up olmasına göre bu eksenleri test sırasında 
                         // değiştirmeniz gerekebilir. Genel standart ROS -> Unity dönüşümü:
-                        targetPosition = new Vector3(-y, z, x);
+                        targetPosition = new Vector3(y, z, x);
 
                         // Rotasyon için Euler açılarını quaternion'a çeviriyoruz
                         targetRotation = Quaternion.Euler(-pitch, -yaw, roll);
