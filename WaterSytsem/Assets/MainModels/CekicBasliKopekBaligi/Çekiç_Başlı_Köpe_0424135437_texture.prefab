@@ -455,8 +455,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roamArea: {fileID: 0}
-  moveSpeed: 2
-  rotationSpeed: 2
+  movementSettings:
+    moveSpeed: 7
+    rotationSpeed: 2
+    minSwimDistance: 10
+    reachTolerance: 5
+  animSettings:
+    wiggleAngle: 20
+    wiggleSpeed: 4
 --- !u!4 &6195468550658786912 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1534361667725687555, guid: 5d316607cc8cac74687342b657ad9422, type: 3}

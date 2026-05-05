@@ -375,6 +375,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2715751991190950149}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9069630057352685410}
   m_SourcePrefab: {fileID: 100100000, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
 --- !u!4 &139168409767476610 stripped
 Transform:
@@ -444,6 +447,27 @@ MonoBehaviour:
   - m_Rig: {fileID: 6483237754605487479}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &9069630057352685410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3076653097248553025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e71b49d1aa75184ba841bb4a0d7d15e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roamArea: {fileID: 0}
+  movementSettings:
+    moveSpeed: 2
+    rotationSpeed: 2
+    minSwimDistance: 15
+    reachTolerance: 5
+  animSettings:
+    wiggleAngle: 20
+    wiggleSpeed: 4
 --- !u!4 &9019866234281545993 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2639638324218457063, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
