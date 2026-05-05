@@ -15430,8 +15430,8 @@ MonoBehaviour:
   scriptInteractions: 1
   cpuEvaluateRipples: 0
   customMaterial: {fileID: 0}
-  startSmoothness: 0.8776597
-  endSmoothness: 0.5691489
+  startSmoothness: 1
+  endSmoothness: 0.6914893
   smoothnessFadeStart: 100
   smoothnessFadeDistance: 500
   tessellation: 1
@@ -15441,7 +15441,7 @@ MonoBehaviour:
   refractionColor: {r: 0.18781857, g: 0.45881146, b: 0.45881146, a: 1}
   maxRefractionDistance: 0.5
   absorptionDistance: 9.9
-  scatteringColor: {r: 0.067270756, g: 0.32296914, b: 0.27683395, a: 1}
+  scatteringColor: {r: 0.027759602, g: 0.16533832, b: 0.14079557, a: 1}
   ambientScattering: 0.363
   heightScattering: 0.621
   displacementScattering: 0.1
@@ -15453,8 +15453,8 @@ MonoBehaviour:
   causticsPlaneBlendDistance: 1
   causticsResolution: 512
   causticsBand: 2
-  virtualPlaneDistance: 4
-  causticsTilingFactor: 0.5
+  virtualPlaneDistance: 2.9
+  causticsTilingFactor: 1.39
   causticsDirectionalShadow: 1
   causticsDirectionalShadowDimmer: 0
   renderingLayerMask: 257
@@ -15468,7 +15468,7 @@ MonoBehaviour:
   volumeDepth: 50
   volumeHeight: 0
   volumePrority: 0
-  absorptionDistanceMultiplier: 6.85
+  absorptionDistanceMultiplier: 10.14
   underWaterAmbientProbeContribution: 1
   underWaterScatteringColorMode: 0
   underWaterScatteringColor: {r: 0, g: 0.26999986, b: 0.22999984, a: 1}
@@ -15498,7 +15498,7 @@ MonoBehaviour:
   foamColor: {r: 1, g: 1, b: 1, a: 1}
   foamTextureTiling: 0.15
   foamSmoothness: 1
-  simulationFoamAmount: 0.68
+  simulationFoamAmount: 0.884
   supportSimulationFoamMask: 0
   simulationFoamMask: {fileID: 0}
   simulationFoamMaskExtent: {x: 100, y: 100}
@@ -17665,7 +17665,7 @@ Transform:
   m_GameObject: {fileID: 1446346277}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.4, y: 8.8, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17736,7 +17736,7 @@ VisualEffect:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: 24.1, y: 0.88, z: 37.09}
+      - m_Value: {x: 50, y: 10, z: 50}
         m_Name: New Oriented Box_size
         m_Overridden: 1
     m_Vector4f:
@@ -20542,72 +20542,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26eee3ec1041fad45aa449d218dc69a9, type: 3}
---- !u!1 &1632430334
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1632430337}
-  - component: {fileID: 1632430336}
-  - component: {fileID: 1632430335}
-  m_Layer: 0
-  m_Name: BalikGezme
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1632430335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1632430334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47626ae4f3304d1448b5f708715f6b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &1632430336
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1632430334}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.2474291, y: 1.5466782, z: 0.255362}
-  m_Center: {x: -0.73233455, y: 0.023495521, z: 0.01836278}
---- !u!4 &1632430337
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1632430334}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: -113.87481, y: -106.685074, z: 966.6758}
-  m_LocalScale: {x: 100, y: 100, z: 100}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1638924635 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a278fbe7ee498064187e58ed4a630591, type: 3}
@@ -26415,6 +26349,5 @@ SceneRoots:
   - {fileID: 1673954332}
   - {fileID: 255650069}
   - {fileID: 330912506}
-  - {fileID: 1632430337}
   - {fileID: 2127836233}
   - {fileID: 329181949}
