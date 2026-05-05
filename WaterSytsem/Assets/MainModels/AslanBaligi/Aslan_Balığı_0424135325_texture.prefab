@@ -368,15 +368,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -426,6 +426,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Aslan_Bal\u0131\u011F\u0131_0424135325_texture"
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
+      propertyPath: m_TagString
+      value: Fish
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -442,6 +446,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3023124339068318567}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6768222654995778213}
   m_SourcePrefab: {fileID: 100100000, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
 --- !u!4 &53935134829191163 stripped
 Transform:
@@ -520,13 +527,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamArea: {fileID: 0}
   movementSettings:
-    moveSpeed: 2
+    moveSpeed: 0.5
     rotationSpeed: 2
     minSwimDistance: 15
     reachTolerance: 5
   animSettings:
     wiggleAngle: 20
     wiggleSpeed: 4
+  flockSettings:
+    isSchooling: 0
+    neighborRadius: 3
+    separationWeight: 2
+    alignmentWeight: 1
+    cohesionWeight: 1.5
+--- !u!136 &6768222654995778213
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6249742719719759686}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.49
+  m_Height: 2.03
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &6769010606894384636 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
