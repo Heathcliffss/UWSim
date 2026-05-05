@@ -1,14 +1,11 @@
 using UnityEngine;
 
-// Verilerin Inspector panelinde düzenli ve görünür olmasý için grupluyoruz
 [System.Serializable]
 public class WanderSettings
 {
     public float moveSpeed = 2f;
     public float rotationSpeed = 2f;
     public float minSwimDistance = 5f;
-
-    [Tooltip("Balýðýn hedefe ulaþtýðýný kabul edeceði mesafe. Kendi etrafýnda dönerse bu deðeri artýrýn.")]
     public float reachTolerance = 1.5f;
 }
 
@@ -19,6 +16,25 @@ public class WiggleSettings
     public float wiggleSpeed = 5f;
 }
 
+[System.Serializable]
+public class FlockSettings
+{
+    [Tooltip("Bu balýk türü sürü halinde mi gezecek? (Kapalýysa yalnýz takýlýr)")]
+    public bool isSchooling = true;
+
+    [Tooltip("Diðer balýklarý algýlama yarýçapý")]
+    public float neighborRadius = 3f;
+
+    [Tooltip("Çarpýþmayý önleme gücü (Ayrýþma)")]
+    public float separationWeight = 2f;
+
+    [Tooltip("Sürüyle ayný yöne gitme gücü (Hizalanma)")]
+    public float alignmentWeight = 1f;
+
+    [Tooltip("Sürünün merkezinde kalma gücü (Bütünlük)")]
+    public float cohesionWeight = 1.5f;
+}
+
 public class RandomWander : MonoBehaviour
 {
     public BoxCollider roamArea;
@@ -26,6 +42,7 @@ public class RandomWander : MonoBehaviour
     [Space(10)]
     public WanderSettings movementSettings;
     public WiggleSettings animSettings;
+    public FlockSettings flockSettings;
 
     private Vector3 targetPosition;
     private bool hasTarget = false;
@@ -47,6 +64,8 @@ public class RandomWander : MonoBehaviour
 
     void GetNewTarget()
     {
+        if (roamArea == null) return;
+
         Bounds bounds = roamArea.bounds;
         Vector3 potentialTarget;
 
@@ -70,24 +89,73 @@ public class RandomWander : MonoBehaviour
 
     void MoveTowardsTarget()
     {
-        // 1. Hedefe ulaþtýysak beklemeden anýnda yeni hedef seç
         if (Vector3.Distance(transform.position, targetPosition) < movementSettings.reachTolerance)
         {
-            GetNewTarget(); 
+            GetNewTarget();
         }
 
-        // 2. Yönelme ve Dönüþ Hesaplamasý
-        Vector3 direction = (targetPosition - transform.position).normalized;
-        Quaternion targetLook = Quaternion.LookRotation(direction);
-        
-        baseRotation = Quaternion.Slerp(baseRotation, targetLook, Time.deltaTime * movementSettings.rotationSpeed);
+        // 1. Temel Hedef Yönü (Kutu içinde seçilen rastgele noktaya gidiþ)
+        Vector3 wanderDirection = (targetPosition - transform.position).normalized;
+        Vector3 finalDirection = wanderDirection;
 
-        // 3. Kuyruk Sallama Efekti
+        // 2. SÜRÜ VE ÇARPIÞMA ÖNLEME MANTIÐI (BOIDS)
+        if (flockSettings.isSchooling)
+        {
+            Vector3 separation = Vector3.zero;
+            Vector3 alignment = Vector3.zero;
+            Vector3 cohesion = Vector3.zero;
+            int groupSize = 0;
+
+            // Etraftaki balýklarý (Collider'larý) bul
+            Collider[] nearbyObjects = Physics.OverlapSphere(transform.position, flockSettings.neighborRadius);
+
+            foreach (Collider col in nearbyObjects)
+            {
+                // Eðer bulduðu þey kendisi deðilse ve bir balýksa
+                if (col.gameObject != gameObject && col.CompareTag("Fish"))
+                {
+                    groupSize++;
+                    Vector3 diff = transform.position - col.transform.position;
+
+                    // Ayrýþma: Yakýnlýða göre ters yöne itme kuvveti
+                    separation += diff.normalized / diff.magnitude;
+
+                    // Hizalanma: Komþunun baktýðý yön
+                    alignment += col.transform.forward;
+
+                    // Bütünlük: Komþunun konumu
+                    cohesion += col.transform.position;
+                }
+            }
+
+            if (groupSize > 0)
+            {
+                // Ortalamalarý al
+                alignment /= groupSize;
+                cohesion = (cohesion / groupSize) - transform.position;
+
+                // Aðýrlýklara göre sürü kuvvetlerini hesapla
+                Vector3 flockDirection = (separation * flockSettings.separationWeight) +
+                                         (alignment.normalized * flockSettings.alignmentWeight) +
+                                         (cohesion.normalized * flockSettings.cohesionWeight);
+
+                // Normal hedef yönü ile sürü hissini birleþtir
+                finalDirection = (wanderDirection + flockDirection).normalized;
+            }
+        }
+
+        // 3. Dönüþü Uygula (Artýk finalDirection'a dönüyor)
+        if (finalDirection != Vector3.zero)
+        {
+            Quaternion targetLook = Quaternion.LookRotation(finalDirection);
+            baseRotation = Quaternion.Slerp(baseRotation, targetLook, Time.deltaTime * movementSettings.rotationSpeed);
+        }
+
+        // 4. Kuyruk Sallama Efekti
         float wiggleOffset = Mathf.Sin(Time.time * animSettings.wiggleSpeed) * animSettings.wiggleAngle;
         transform.rotation = baseRotation * Quaternion.Euler(0, wiggleOffset, 0);
 
-        // 4. Sürekli Ýleri Hareket (Hiç duraksamaz)
+        // 5. Ýleri Hareket
         transform.position += baseRotation * Vector3.forward * movementSettings.moveSpeed * Time.deltaTime;
     }
-    
 }
