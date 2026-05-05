@@ -68,9 +68,9 @@ public class GazeboDataReceiver : MonoBehaviour
                     lock (lockObject)
                     {
                         // Ölçeklendirme uygula (Çok hızlı uçmasını engeller)
-                        targetPosition = new Vector3(-y, z, x) * positionScale;
+                        targetPosition = new Vector3(x, y, z) * positionScale;
 
-                        targetRotation = Quaternion.Euler(-pitch, -yaw, roll);
+                        targetRotation = Quaternion.Euler(-roll, yaw,-pitch);
                     }
                 }
             }
