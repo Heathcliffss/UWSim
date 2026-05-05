@@ -391,12 +391,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2715751991190950149}
+<<<<<<< HEAD
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9069630057352685410}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4337269786501007700}
+=======
+>>>>>>> parent of c37f387 (Merge remote-tracking branch 'origin/Cem' into Marinteg)
   m_SourcePrefab: {fileID: 100100000, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
 --- !u!4 &139168409767476610 stripped
 Transform:
@@ -466,6 +469,7 @@ MonoBehaviour:
   - m_Rig: {fileID: 6483237754605487479}
     m_Active: 1
   m_Effectors: []
+<<<<<<< HEAD
 --- !u!114 &9069630057352685410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,6 +520,8 @@ CapsuleCollider:
   m_Height: 1.99
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> parent of c37f387 (Merge remote-tracking branch 'origin/Cem' into Marinteg)
 --- !u!4 &9019866234281545993 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2639638324218457063, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}

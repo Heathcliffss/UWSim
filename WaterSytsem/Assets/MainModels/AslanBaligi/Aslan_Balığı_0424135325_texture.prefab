@@ -367,6 +367,7 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
+<<<<<<< HEAD
       propertyPath: m_LocalScale.x
       value: 0.3
       objectReference: {fileID: 0}
@@ -379,6 +380,8 @@ PrefabInstance:
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
+=======
+>>>>>>> parent of c37f387 (Merge remote-tracking branch 'origin/Cem' into Marinteg)
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -443,12 +446,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4126541119621057760}
+<<<<<<< HEAD
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3023124339068318567}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6768222654995778213}
+=======
+>>>>>>> parent of c37f387 (Merge remote-tracking branch 'origin/Cem' into Marinteg)
   m_SourcePrefab: {fileID: 100100000, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
 --- !u!4 &53935134829191163 stripped
 Transform:
@@ -513,6 +519,7 @@ MonoBehaviour:
   - m_Rig: {fileID: 4019523998103758323}
     m_Active: 1
   m_Effectors: []
+<<<<<<< HEAD
 --- !u!114 &3023124339068318567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,6 +570,8 @@ CapsuleCollider:
   m_Height: 2.03
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> parent of c37f387 (Merge remote-tracking branch 'origin/Cem' into Marinteg)
 --- !u!4 &6769010606894384636 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a805be67f98f60f41996bb05a16e31cc, type: 3}
