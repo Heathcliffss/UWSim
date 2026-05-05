@@ -9,14 +9,18 @@ public class GazeboDataReceiver : MonoBehaviour
     [Header("Ağ Ayarları")]
     public int listenPort = 5007;
 
+    [Header("Hareket Ayarları")]
+    [Tooltip("Python'dan gelen devasa veriyi Unity ölçeğine uydurmak için (örn: 0.01 veya 0.05)")]
+    public float positionScale = 0.05f;
+
     [Header("Yumuşatma (VR İçin)")]
-    public float lerpSpeed = 15f; // Gelen veriye ne kadar hızlı adapte olunacağı
+    public bool useSmoothing = true;
+    public float lerpSpeed = 15f;
 
     private UdpClient udpClient;
     private Thread receiveThread;
     private bool isRunning = false;
 
-    // Arka plandan ana thread'e veri taşımak için
     private Vector3 targetPosition;
     private Quaternion targetRotation;
     private readonly object lockObject = new object();
@@ -40,13 +44,19 @@ public class GazeboDataReceiver : MonoBehaviour
 
             while (isRunning)
             {
-                // Python'dan gelen bayt dizisini yakala
+                // Bir paket oku
                 byte[] data = udpClient.Receive(ref anyIP);
 
-                // Paket boyutu doğrulaması (20 float = 80 bayt, kalanlar int)
+                // ÖNEMLİ: Eğer kuyrukta bekleyen BAŞKA paketler varsa, onları da oku ve çöpe at.
+                // Sadece en son gelen (en güncel) paketi işleme alacağız. Bu titremeyi (jitter) önler.
+                while (udpClient.Available > 0)
+                {
+                    data = udpClient.Receive(ref anyIP);
+                }
+
+                // Paket boyutu doğrulaması
                 if (data.Length >= 80)
                 {
-                    // C# BitConverter ile byte array'den float çıkarma
                     float x = BitConverter.ToSingle(data, 0 * 4);
                     float y = BitConverter.ToSingle(data, 1 * 4);
                     float z = BitConverter.ToSingle(data, 2 * 4);
@@ -57,12 +67,9 @@ public class GazeboDataReceiver : MonoBehaviour
 
                     lock (lockObject)
                     {
-                        // KOORDİNAT DÖNÜŞÜMÜ (ROS / Gazebo -> Unity)
-                        // Simülasyonun Z-up veya Y-up olmasına göre bu eksenleri test sırasında 
-                        // değiştirmeniz gerekebilir. Genel standart ROS -> Unity dönüşümü:
-                        targetPosition = new Vector3(y, z, x);
+                        // Ölçeklendirme uygula (Çok hızlı uçmasını engeller)
+                        targetPosition = new Vector3(-y, z, x) * positionScale;
 
-                        // Rotasyon için Euler açılarını quaternion'a çeviriyoruz
                         targetRotation = Quaternion.Euler(-pitch, -yaw, roll);
                     }
                 }
@@ -77,12 +84,18 @@ public class GazeboDataReceiver : MonoBehaviour
 
     void Update()
     {
-        // Unity Transform güncellemeleri ana thread'de yapılmak zorundadır
         lock (lockObject)
         {
-            // VR ortamında titremeyi önlemek için konum ve rotasyonu yumuşakça (Lerp/Slerp) uyguluyoruz
-            transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * lerpSpeed);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * lerpSpeed);
+            if (useSmoothing)
+            {
+                transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * lerpSpeed);
+                transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * lerpSpeed);
+            }
+            else
+            {
+                transform.localPosition = targetPosition;
+                transform.localRotation = targetRotation;
+            }
         }
     }
 
@@ -90,12 +103,9 @@ public class GazeboDataReceiver : MonoBehaviour
     {
         isRunning = false;
         if (udpClient != null)
-        {
             udpClient.Close();
-        }
+
         if (receiveThread != null && receiveThread.IsAlive)
-        {
             receiveThread.Join(500);
-        }
     }
 }
