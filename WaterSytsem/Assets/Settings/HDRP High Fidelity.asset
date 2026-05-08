@@ -68,7 +68,7 @@ MonoBehaviour:
     highQualityLineRenderingMemoryBudget: 128
     msaaSampleCount: 1
     supportMotionVectors: 1
-    supportScreenSpaceLensFlare: 0
+    supportScreenSpaceLensFlare: 1
     supportDataDrivenLensFlare: 1
     supportDitheringCrossFade: 1
     supportRuntimeAOVAPI: 0
@@ -338,7 +338,7 @@ MonoBehaviour:
   availableMaterialQualityLevels: -1
   m_DefaultMaterialQualityLevel: 4
   diffusionProfileSettings: {fileID: 0}
-  m_VolumeProfile: {fileID: 0}
+  m_VolumeProfile: {fileID: 11400000, guid: 415b27a494d85184d80315fe391e87c8, type: 2}
   virtualTexturingSettings:
     streamingCpuCacheSizeInMegaBytes: 256
     streamingMipPreloadTexturesPerFrame: 0

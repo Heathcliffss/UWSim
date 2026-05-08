@@ -474,17 +474,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roamArea: {fileID: 0}
-  moveSpeed: 3
-  rotationSpeed: 2
-  minSwimDistance: 10
-  reachTolerance: 2
-  isSchooling: 0
-  neighborRadius: 4
-  separationWeight: 1.5
-  alignmentWeight: 1
-  cohesionWeight: 1
-  wiggleAngle: 15
-  wiggleSpeed: 5
+<<<<<<< HEAD
+  movementSettings:
+    moveSpeed: 2
+    rotationSpeed: 2
+    minSwimDistance: 10
+    reachTolerance: 5
+  animSettings:
+    wiggleAngle: 20
+    wiggleSpeed: 4
+  flockSettings:
+    isSchooling: 0
+    neighborRadius: 3
+    separationWeight: 2
+    alignmentWeight: 1
+    cohesionWeight: 1.5
 --- !u!136 &2200379769504422143
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -508,6 +512,10 @@ CapsuleCollider:
   m_Height: 1.96
   m_Direction: 2
   m_Center: {x: 0, y: -0.09, z: 0}
+=======
+  moveSpeed: 2
+  rotationSpeed: 2
+>>>>>>> parent of c37f387 (Merge remote-tracking branch 'origin/Cem' into Marinteg)
 --- !u!4 &6195468550658786912 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1534361667725687555, guid: 5d316607cc8cac74687342b657ad9422, type: 3}
