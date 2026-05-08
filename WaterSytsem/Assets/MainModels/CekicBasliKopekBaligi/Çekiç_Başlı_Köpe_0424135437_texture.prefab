@@ -474,6 +474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roamArea: {fileID: 0}
+<<<<<<< HEAD
   movementSettings:
     moveSpeed: 2
     rotationSpeed: 2
@@ -511,6 +512,10 @@ CapsuleCollider:
   m_Height: 1.96
   m_Direction: 2
   m_Center: {x: 0, y: -0.09, z: 0}
+=======
+  moveSpeed: 2
+  rotationSpeed: 2
+>>>>>>> parent of c37f387 (Merge remote-tracking branch 'origin/Cem' into Marinteg)
 --- !u!4 &6195468550658786912 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1534361667725687555, guid: 5d316607cc8cac74687342b657ad9422, type: 3}
