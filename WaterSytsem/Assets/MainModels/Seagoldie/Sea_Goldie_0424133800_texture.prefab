@@ -378,6 +378,46 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Fish
       objectReference: {fileID: 0}
+    - target: {fileID: 2917289242402929547, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.986244e-11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917289242402929547, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0029692587
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917289242402929547, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0000001200051
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917289242402929547, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9839651
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917289242402929547, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0578824
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917289242402929547, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.020680383
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917289242402929547, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16743536
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917289242402929547, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -6.141
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917289242402929547, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 3.464
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917289242402929547, guid: 29b295a0ad2e9ed49bbc670d1462c809, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -19.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -479,20 +519,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roamArea: {fileID: 0}
-  movementSettings:
-    moveSpeed: 1
-    rotationSpeed: 2
-    minSwimDistance: 15
-    reachTolerance: 5
-  animSettings:
-    wiggleAngle: 20
-    wiggleSpeed: 4
-  flockSettings:
-    isSchooling: 1
-    neighborRadius: 3
-    separationWeight: 2
-    alignmentWeight: 1
-    cohesionWeight: 1.5
+  moveSpeed: 1
+  rotationSpeed: 2
+  minSwimDistance: 5
+  reachTolerance: 2
+  isSchooling: 1
+  neighborRadius: 10
+  separationWeight: 0.3
+  alignmentWeight: 0.2
+  cohesionWeight: 5
+  wiggleAngle: 15
+  wiggleSpeed: 5
 --- !u!136 &4337269786501007700
 CapsuleCollider:
   m_ObjectHideFlags: 0

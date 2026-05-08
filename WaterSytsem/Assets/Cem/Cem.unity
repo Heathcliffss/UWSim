@@ -819,9 +819,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishGroups:
   - fishPrefab: {fileID: 1176084805657989124, guid: c5366ac54281fee4aa03e617c2fdcb82, type: 3}
-    spawnCount: 20
-  - fishPrefab: {fileID: 0}
     spawnCount: 0
+  - fishPrefab: {fileID: 3076653097248553025, guid: c77a7b1dcc02bf14cb93b7b0d684b5af, type: 3}
+    spawnCount: 100
   - fishPrefab: {fileID: 0}
     spawnCount: 0
   - fishPrefab: {fileID: 0}

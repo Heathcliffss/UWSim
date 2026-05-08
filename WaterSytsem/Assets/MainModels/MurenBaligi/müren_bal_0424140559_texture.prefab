@@ -454,20 +454,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roamArea: {fileID: 0}
-  movementSettings:
-    moveSpeed: 1
-    rotationSpeed: 2
-    minSwimDistance: 15
-    reachTolerance: 5
-  animSettings:
-    wiggleAngle: 20
-    wiggleSpeed: 4
-  flockSettings:
-    isSchooling: 1
-    neighborRadius: 3
-    separationWeight: 2
-    alignmentWeight: 1
-    cohesionWeight: 1.5
+  moveSpeed: 1
+  rotationSpeed: 2
+  minSwimDistance: 5
+  reachTolerance: 2
+  isSchooling: 1
+  neighborRadius: 10
+  separationWeight: 0.3
+  alignmentWeight: 0.2
+  cohesionWeight: 5
+  wiggleAngle: 15
+  wiggleSpeed: 5
 --- !u!136 &6774641736702020465
 CapsuleCollider:
   m_ObjectHideFlags: 0
