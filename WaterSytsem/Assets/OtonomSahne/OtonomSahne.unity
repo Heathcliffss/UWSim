@@ -19474,6 +19474,84 @@ Transform:
   m_Children: []
   m_Father: {fileID: 213196479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1383385124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1383385127}
+  - component: {fileID: 1383385126}
+  - component: {fileID: 1383385125}
+  m_Layer: 0
+  m_Name: BalikGezme
+  m_TagString: Fish
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1383385125
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383385124}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 241.80322, y: 74.26949, z: 193.25513}
+  m_Center: {x: 23.755829, y: 16.008205, z: -28.77893}
+--- !u!114 &1383385126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383385124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47626ae4f3304d1448b5f708715f6b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishGroups:
+  - fishPrefab: {fileID: 8860100119144572271, guid: 34270c569f8caf9409230320e0b5089d, type: 3}
+    spawnCount: 5
+  - fishPrefab: {fileID: 4245986835893041137, guid: 6674dbe6a51c2c947842ffa8ceafb020, type: 3}
+    spawnCount: 2
+  - fishPrefab: {fileID: 9188051844419661654, guid: c5366ac54281fee4aa03e617c2fdcb82, type: 3}
+    spawnCount: 10
+  - fishPrefab: {fileID: 7836610165392961171, guid: cb54a0c71a3e04740bfe22e3c657452b, type: 3}
+    spawnCount: 10
+  - fishPrefab: {fileID: 6484530579717078962, guid: c77a7b1dcc02bf14cb93b7b0d684b5af, type: 3}
+    spawnCount: 100
+  spawnAndRoamArea: {fileID: 1383385125}
+--- !u!4 &1383385127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383385124}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -99.9, y: -95.5, z: 923}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1386147634
 GameObject:
   m_ObjectHideFlags: 0
@@ -35653,6 +35731,7 @@ SceneRoots:
   - {fileID: 1037385658}
   - {fileID: 254413905}
   - {fileID: 2028623688}
+  - {fileID: 1383385127}
   - {fileID: 82326423}
   - {fileID: 569534452}
   - {fileID: 317504380}
