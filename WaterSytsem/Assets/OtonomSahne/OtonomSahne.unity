@@ -19511,8 +19511,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 241.80322, y: 74.26949, z: 193.25513}
-  m_Center: {x: 23.755829, y: 16.008205, z: -28.77893}
+  m_Size: {x: 175.88744, y: 49.38604, z: 156.08069}
+  m_Center: {x: -9.2020645, y: 3.5664787, z: -10.191711}
 --- !u!114 &1383385126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19527,15 +19527,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishGroups:
   - fishPrefab: {fileID: 8860100119144572271, guid: 34270c569f8caf9409230320e0b5089d, type: 3}
-    spawnCount: 5
+    spawnCount: 8
   - fishPrefab: {fileID: 4245986835893041137, guid: 6674dbe6a51c2c947842ffa8ceafb020, type: 3}
-    spawnCount: 2
+    spawnCount: 5
   - fishPrefab: {fileID: 9188051844419661654, guid: c5366ac54281fee4aa03e617c2fdcb82, type: 3}
-    spawnCount: 10
+    spawnCount: 15
   - fishPrefab: {fileID: 7836610165392961171, guid: cb54a0c71a3e04740bfe22e3c657452b, type: 3}
-    spawnCount: 10
+    spawnCount: 15
   - fishPrefab: {fileID: 6484530579717078962, guid: c77a7b1dcc02bf14cb93b7b0d684b5af, type: 3}
-    spawnCount: 100
+    spawnCount: 150
   spawnAndRoamArea: {fileID: 1383385125}
 --- !u!4 &1383385127
 Transform:
