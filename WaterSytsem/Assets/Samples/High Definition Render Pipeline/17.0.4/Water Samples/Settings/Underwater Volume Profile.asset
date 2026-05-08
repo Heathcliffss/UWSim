@@ -1269,7 +1269,7 @@ MonoBehaviour:
   active: 1
   temperature:
     m_OverrideState: 1
-    m_Value: -7
+    m_Value: -17
   tint:
     m_OverrideState: 1
     m_Value: 34
@@ -1288,7 +1288,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.56
   tintColor:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
@@ -1327,7 +1327,7 @@ MonoBehaviour:
     m_Value: 0.38
   streaksLength:
     m_OverrideState: 1
-    m_Value: 0.223
+    m_Value: 0.137
   streaksOrientation:
     m_OverrideState: 0
     m_Value: 0
