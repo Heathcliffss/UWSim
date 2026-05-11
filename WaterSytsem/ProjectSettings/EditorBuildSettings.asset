@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Omer/son1.unity
-    guid: b2da9f0aea56f914d9f00e83a377c52b
+    path: Assets/OtonomSahne/OtonomMenu/OtonomMenu.unity
+    guid: e20ad7bb546a8014f96147283d872c40
+  - enabled: 1
+    path: Assets/OtonomSahne/OtonomSahne.unity
+    guid: 3a3458c0fb991a3459c0204a3854f873
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a732ad7dcd10a9e4f97d8aa3ee171caa, type: 2}
