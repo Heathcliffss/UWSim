@@ -357,12 +357,12 @@ MonoBehaviour:
   minSwimDistance: 10
   reachTolerance: 2
   isSchooling: 1
-  neighborRadius: 5
+  neighborRadius: 4
   separationWeight: 1.5
   alignmentWeight: 1
-  cohesionWeight: 1
-  wiggleAngle: 20
-  wiggleSpeed: 6
+  cohesionWeight: 0
+  wiggleAngle: 15
+  wiggleSpeed: 5
 --- !u!136 &6817466489605828916
 CapsuleCollider:
   m_ObjectHideFlags: 0
