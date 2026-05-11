@@ -509,7 +509,7 @@ MonoBehaviour:
   roamArea: {fileID: 0}
   moveSpeed: 3
   rotationSpeed: 2
-  minSwimDistance: 10
+  minSwimDistance: 20
   reachTolerance: 2
   isSchooling: 1
   neighborRadius: 4

@@ -507,7 +507,7 @@ MonoBehaviour:
   alignmentWeight: 1
   cohesionWeight: 1
   wiggleAngle: 15
-  wiggleSpeed: 5
+  wiggleSpeed: 3
 --- !u!4 &5945836228353004903 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7254865629135478727, guid: 5d316607cc8cac74687342b657ad9422, type: 3}

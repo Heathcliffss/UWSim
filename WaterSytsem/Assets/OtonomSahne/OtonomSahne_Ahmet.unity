@@ -20400,11 +20400,11 @@ MonoBehaviour:
   - fishPrefab: {fileID: 4245986835893041137, guid: 6674dbe6a51c2c947842ffa8ceafb020, type: 3}
     spawnCount: 5
   - fishPrefab: {fileID: 9188051844419661654, guid: c5366ac54281fee4aa03e617c2fdcb82, type: 3}
-    spawnCount: 15
+    spawnCount: 20
   - fishPrefab: {fileID: 7836610165392961171, guid: cb54a0c71a3e04740bfe22e3c657452b, type: 3}
-    spawnCount: 15
+    spawnCount: 20
   - fishPrefab: {fileID: 6484530579717078962, guid: c77a7b1dcc02bf14cb93b7b0d684b5af, type: 3}
-    spawnCount: 150
+    spawnCount: 300
   spawnAndRoamArea: {fileID: 1383385125}
 --- !u!4 &1383385127
 Transform:
