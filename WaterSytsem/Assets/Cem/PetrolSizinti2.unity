@@ -2557,17 +2557,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishGroups:
-  - fishPrefab: {fileID: 6249742719719759686, guid: 34270c569f8caf9409230320e0b5089d, type: 3}
+  - fishPrefab: {fileID: 711944733732721770, guid: bfb60d8c3bf8bee43bc88552137c70a1, type: 3}
+    spawnCount: 100
+  - fishPrefab: {fileID: 6023620895591054795, guid: e57657ba3afac444489d4e965f127697, type: 3}
+    spawnCount: 100
+  - fishPrefab: {fileID: 8860100119144572271, guid: 34270c569f8caf9409230320e0b5089d, type: 3}
     spawnCount: 15
-  - fishPrefab: {fileID: 5508172606010933298, guid: 6674dbe6a51c2c947842ffa8ceafb020, type: 3}
+  - fishPrefab: {fileID: 4245986835893041137, guid: 6674dbe6a51c2c947842ffa8ceafb020, type: 3}
     spawnCount: 5
-  - fishPrefab: {fileID: 1176084805657989124, guid: c5366ac54281fee4aa03e617c2fdcb82, type: 3}
-    spawnCount: 20
-  - fishPrefab: {fileID: 7703417835850162306, guid: cb54a0c71a3e04740bfe22e3c657452b, type: 3}
-    spawnCount: 20
-  - fishPrefab: {fileID: 3076653097248553025, guid: c77a7b1dcc02bf14cb93b7b0d684b5af, type: 3}
+  - fishPrefab: {fileID: 9188051844419661654, guid: c5366ac54281fee4aa03e617c2fdcb82, type: 3}
+    spawnCount: 25
+  - fishPrefab: {fileID: 7836610165392961171, guid: cb54a0c71a3e04740bfe22e3c657452b, type: 3}
+    spawnCount: 25
+  - fishPrefab: {fileID: 6484530579717078962, guid: c77a7b1dcc02bf14cb93b7b0d684b5af, type: 3}
     spawnCount: 100
   spawnAndRoamArea: {fileID: 203601418}
+  minSpawnSpacing: 2
 --- !u!65 &203601418
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15062,7 +15067,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315629642}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 3d3cd1ab63966f249b036d6e7ca0d74b, type: 3}
+  m_Asset: {fileID: 0}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0

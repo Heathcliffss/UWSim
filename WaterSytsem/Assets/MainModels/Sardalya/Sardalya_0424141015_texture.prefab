@@ -543,7 +543,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -564,14 +564,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roamArea: {fileID: 0}
-  moveSpeed: 3
-  rotationSpeed: 2
-  minSwimDistance: 20
-  reachTolerance: 2
-  isSchooling: 1
-  neighborRadius: 4
-  separationWeight: 1.5
-  alignmentWeight: 1
-  cohesionWeight: 1
-  wiggleAngle: 15
-  wiggleSpeed: 5
+  movementSettings:
+    moveSpeed: 2
+    rotationSpeed: 2
+    minSwimDistance: 10
+    reachTolerance: 2
+  animSettings:
+    wiggleAngle: 15
+    wiggleSpeed: 5
+  flockSettings:
+    isSchooling: 1
+    neighborRadius: 10
+    separationWeight: 0.5
+    alignmentWeight: 1.5
+    cohesionWeight: 2.5
+    avoidanceRadius: 5
+    avoidanceWeight: 5
