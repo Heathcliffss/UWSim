@@ -10848,7 +10848,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 913442987}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 3d3cd1ab63966f249b036d6e7ca0d74b, type: 3}
+  m_Asset: {fileID: 0}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -13816,8 +13816,8 @@ MonoBehaviour:
     volumeMask: {fileID: 0}
     textureScrollingSpeed: {x: 0, y: 0, z: 0}
     textureTiling: {x: 1, y: 1, z: 1}
-    positiveFade: {x: 0.1, y: 0.5, z: 0.1}
-    negativeFade: {x: 0.1, y: 0.5, z: 0.1}
+    positiveFade: {x: 0.2155219, y: 0.44624856, z: 0.2749888}
+    negativeFade: {x: 0.2155219, y: 0.44624856, z: 0.2749888}
     m_EditorUniformFade: 15
     m_EditorPositiveFade: {x: 0.0006666666, y: 0.0033333332, z: 0}
     m_EditorNegativeFade: {x: 0.0006666666, y: 0.0033333332, z: 0}
@@ -28699,7 +28699,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listenPort: 5007
-  lerpSpeed: 15
+  positionScale: 1
+  pythonOrigin: {x: -104.002, y: -118.9, z: 873.614}
+  interpolationDelay: 0.06
+  maxBufferSamples: 200
+  useSmoothing: 1
+  positionSmoothTime: 0.025
+  rotationSmoothSpeed: 18
+  positionDeadband: 0.001
+  rotationDeadbandDeg: 0.03
 --- !u!4 &2057566320 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a61ff4d7d2cae904ebee5744ddf2fe64, type: 3}
