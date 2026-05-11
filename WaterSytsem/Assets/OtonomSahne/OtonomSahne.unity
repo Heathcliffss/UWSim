@@ -3696,7 +3696,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 261272177}
-  - component: {fileID: 261272178}
   - component: {fileID: 261272179}
   - component: {fileID: 261272180}
   m_Layer: 0
@@ -3730,28 +3729,6 @@ Transform:
   - {fileID: 428304159}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &261272178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 261272176}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621fa0688781c8c4589fa1869eee91ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listenPort: 5007
-  positionScale: 1
-  pythonOrigin: {x: -104.002, y: -118.9, z: 873.614}
-  interpolationDelay: 0.06
-  maxBufferSamples: 200
-  useSmoothing: 1
-  positionSmoothTime: 0.025
-  rotationSmoothSpeed: 18
-  positionDeadband: 0.001
-  rotationDeadbandDeg: 0.03
 --- !u!114 &261272179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17524,7 +17501,7 @@ MonoBehaviour:
   cpuEvaluateRipples: 0
   customMaterial: {fileID: 0}
   startSmoothness: 1
-  endSmoothness: 0.6914893
+  endSmoothness: 0.6914892
   smoothnessFadeStart: 100
   smoothnessFadeDistance: 500
   tessellation: 1
@@ -17533,7 +17510,7 @@ MonoBehaviour:
   tessellationFactorFadeRange: 1850
   refractionColor: {r: 0.04466382, g: 0.28172556, b: 0.41899896, a: 1}
   maxRefractionDistance: 0.5
-  absorptionDistance: 17.5
+  absorptionDistance: 18.1
   scatteringColor: {r: 0.02078288, g: 0.11953862, b: 0.2054129, a: 1}
   ambientScattering: 0.363
   heightScattering: 0.621
@@ -21337,19 +21314,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6687864401899217919, guid: c1732b7526a5c66498fc147ee2b196f7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6687864401899217919, guid: c1732b7526a5c66498fc147ee2b196f7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6687864401899217919, guid: c1732b7526a5c66498fc147ee2b196f7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6687864401899217919, guid: c1732b7526a5c66498fc147ee2b196f7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6687864401899217919, guid: c1732b7526a5c66498fc147ee2b196f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -21357,7 +21334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6687864401899217919, guid: c1732b7526a5c66498fc147ee2b196f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6687864401899217919, guid: c1732b7526a5c66498fc147ee2b196f7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -30211,7 +30188,7 @@ Transform:
   m_GameObject: {fileID: 2135240006}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -113.7, y: -128.23, z: 922.53613}
+  m_LocalPosition: {x: -113.7, y: -132.94, z: 922.53613}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
