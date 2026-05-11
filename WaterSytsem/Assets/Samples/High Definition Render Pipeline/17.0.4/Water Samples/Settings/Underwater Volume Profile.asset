@@ -1289,7 +1289,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.17
+    m_Value: 0.01
   tintColor:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
@@ -1328,7 +1328,7 @@ MonoBehaviour:
     m_Value: 1.23
   streaksLength:
     m_OverrideState: 1
-    m_Value: 0.097
+    m_Value: 0.309
   streaksOrientation:
     m_OverrideState: 0
     m_Value: 0
@@ -1377,7 +1377,7 @@ MonoBehaviour:
     m_Value: 0
   nearFocusEnd:
     m_OverrideState: 1
-    m_Value: 1.83
+    m_Value: 1
   farFocusStart:
     m_OverrideState: 1
     m_Value: 12.6
@@ -1389,13 +1389,13 @@ MonoBehaviour:
     m_Value: 8
   m_NearMaxBlur:
     m_OverrideState: 1
-    m_Value: 7
+    m_Value: 8
   m_FarSampleCount:
     m_OverrideState: 1
     m_Value: 11
   m_FarMaxBlur:
     m_OverrideState: 1
-    m_Value: 1.58
+    m_Value: 1.01
   m_Resolution:
     m_OverrideState: 1
     m_Value: 1
