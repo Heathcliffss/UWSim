@@ -498,21 +498,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamArea: {fileID: 0}
   movementSettings:
-    moveSpeed: 2
+    moveSpeed: 3
     rotationSpeed: 2
     minSwimDistance: 10
     reachTolerance: 2
-  animSettings:
-    wiggleAngle: 15
-    wiggleSpeed: 5
   flockSettings:
     isSchooling: 0
+    speciesName: 
+    maxGroupSize: 10
     neighborRadius: 10
     separationWeight: 0.5
     alignmentWeight: 1.5
     cohesionWeight: 2.5
     avoidanceRadius: 5
     avoidanceWeight: 5
+  animSettings:
+    wiggleAngle: 15
+    wiggleSpeed: 4
 --- !u!4 &5945836228353004903 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7254865629135478727, guid: 5d316607cc8cac74687342b657ad9422, type: 3}

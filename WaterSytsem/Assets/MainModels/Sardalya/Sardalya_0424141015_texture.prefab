@@ -547,7 +547,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.29
+  m_Radius: 0.4
   m_Height: 1.98
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -569,14 +569,16 @@ MonoBehaviour:
     rotationSpeed: 2
     minSwimDistance: 10
     reachTolerance: 2
-  animSettings:
-    wiggleAngle: 15
-    wiggleSpeed: 5
   flockSettings:
     isSchooling: 1
+    speciesName: 
+    maxGroupSize: 10
     neighborRadius: 10
     separationWeight: 0.5
     alignmentWeight: 1.5
-    cohesionWeight: 2.5
+    cohesionWeight: 1
     avoidanceRadius: 5
     avoidanceWeight: 5
+  animSettings:
+    wiggleAngle: 15
+    wiggleSpeed: 5
