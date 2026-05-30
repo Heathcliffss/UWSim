@@ -12,7 +12,9 @@ public class SmoothCameraFollow : MonoBehaviour
     
     [Header("Yumuşatma")]
     public float smoothSpeed = 10f;
-
+    
+    
+    // burası klavye tuşu olacak FPS/TPS kamera değişiyor
     [Header("VR Kontrol (B Tuşu)")]
     // Inspector'da "XRI RightHand Interaction/Secondary Button" seçilmeli
     public InputActionProperty toggleViewAction; 

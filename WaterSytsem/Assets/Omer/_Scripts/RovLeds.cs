@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class RovLeds : MonoBehaviour
@@ -9,11 +8,19 @@ public class RovLeds : MonoBehaviour
     public GameObject[] leftLEDs;
     public GameObject[] rightLEDs;
 
-  
+    [Header("Test Ayarlarý")]
     public bool isEmergency = false;
+    public bool backOnlyTest = true;
 
-    [Header("Hýz Ayarý")]
-    public float tickRate = 0.125f; // Her bir bitin süresi
+    [Header("Zamanlama Ayarý")]
+    public int targetFPS = 60;
+
+    // Bunu özellikle geri ekliyoruz.
+    // Çünkü SimulasyonVeriAlici.cs bu deðiþkene eriþiyor.
+    public float tickRate = 0.1f;
+
+    [Header("Frame Tabanlý Pattern Ayarý")]
+    public int framesPerBit = 6;
 
     private string pFront = "11110000";
     private string pBack = "11001100";
@@ -21,48 +28,74 @@ public class RovLeds : MonoBehaviour
     private string pRight = "10011001";
     private string pEmer = "1111111100000000";
 
-    private int index = 0;
+    private int startFrame;
 
     void Start()
     {
-        StartCoroutine(PatternLoop());
+        Application.targetFrameRate = targetFPS;
+        startFrame = Time.frameCount;
+
+        UpdateFramesPerBit();
     }
 
-    IEnumerator PatternLoop()
+    void Update()
     {
-        while (true)
+        // Eðer baþka script tickRate'i deðiþtirirse framesPerBit de güncel kalsýn.
+        UpdateFramesPerBit();
+
+        int elapsedFrames = Time.frameCount - startFrame;
+        int bitIndex = elapsedFrames / framesPerBit;
+
+        if (isEmergency)
         {
-            if (isEmergency)
+            bool state = pEmer[bitIndex % pEmer.Length] == '1';
+
+            SetGroup(frontLEDs, state);
+            SetGroup(backLEDs, state);
+            SetGroup(leftLEDs, state);
+            SetGroup(rightLEDs, state);
+        }
+        else
+        {
+            bool frontState = pFront[bitIndex % pFront.Length] == '1';
+            bool backState = pBack[bitIndex % pBack.Length] == '1';
+            bool leftState = pLeft[bitIndex % pLeft.Length] == '1';
+            bool rightState = pRight[bitIndex % pRight.Length] == '1';
+
+            if (backOnlyTest)
             {
-                // Acil durum paterni için mod 16 kullanýyoruz
-                bool state = pEmer[index % 16] == '1';
-                SetGroup(frontLEDs, state);
-                SetGroup(backLEDs, state);
-                SetGroup(leftLEDs, state);
-                SetGroup(rightLEDs, state);
+                SetGroup(frontLEDs, false);
+                SetGroup(backLEDs, backState);
+                SetGroup(leftLEDs, false);
+                SetGroup(rightLEDs, false);
             }
             else
             {
-                // Normal paternler 8 bit olduðu için mod 8 kullanýyoruz
-                int i8 = index % 8;
-                SetGroup(frontLEDs, pFront[i8] == '1');
-                SetGroup(backLEDs, pBack[i8] == '1');
-                SetGroup(leftLEDs, pLeft[i8] == '1');
-                SetGroup(rightLEDs, pRight[i8] == '1');
+                SetGroup(frontLEDs, frontState);
+                SetGroup(backLEDs, backState);
+                SetGroup(leftLEDs, leftState);
+                SetGroup(rightLEDs, rightState);
             }
-
-            index++;
-            if (index >= 16) index = 0; 
-
-            yield return new WaitForSeconds(tickRate);
         }
+    }
+
+    void UpdateFramesPerBit()
+    {
+        if (targetFPS <= 0)
+            targetFPS = 60;
+
+        if (tickRate <= 0f)
+            tickRate = 0.1f;
+
+        framesPerBit = Mathf.Max(1, Mathf.RoundToInt(tickRate * targetFPS));
     }
 
     void SetGroup(GameObject[] leds, bool state)
     {
         foreach (var led in leds)
         {
-            if (led != null) led.SetActive(state);
+            if (led != null)
+                led.SetActive(state);
         }
     }
 }

@@ -197,7 +197,7 @@ MonoBehaviour:
   - {fileID: 1821567593347123208}
   - {fileID: 1753896206087034549}
   isEmergency: 0
-  tickRate: 0.125
+  tickRate: 0.1
 --- !u!1 &1753896206087034549
 GameObject:
   m_ObjectHideFlags: 0

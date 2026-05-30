@@ -283,7 +283,10 @@ MonoBehaviour:
   - {fileID: 2520153597586813836}
   - {fileID: 3345402143219924843}
   isEmergency: 0
-  tickRate: 0.125
+  backOnlyTest: 1
+  targetFPS: 60
+  tickRate: 0.1
+  framesPerBit: 6
 --- !u!114 &277262664343859111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +294,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3248583025889014146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ac47a151e0adbd418ad0c89bdf7ebd7, type: 3}
   m_Name: 

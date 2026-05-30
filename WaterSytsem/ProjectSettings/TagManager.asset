@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cable
   - Fish
+  - CVRecorderCamera
   layers:
   - Default
   - TransparentFX

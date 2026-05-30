@@ -42011,8 +42011,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   liderPortInput: {fileID: 912355326}
-  takipciPortInput: {fileID: 0}
-  ortakTickInput: {fileID: 0}
+  takipciPortInput: {fileID: 251847232}
+  ortakTickInput: {fileID: 218497139}
   baslatButonu: {fileID: 346184838}
   menuPaneli: {fileID: 266996721}
 --- !u!4 &1964376083

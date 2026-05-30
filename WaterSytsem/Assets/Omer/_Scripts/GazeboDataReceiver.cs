@@ -16,6 +16,15 @@ public class GazeboDataReceiver : MonoBehaviour
     [Header("Python başlangıç ofseti")]
     public Vector3 pythonOrigin = new Vector3(-104.002f, -118.9f, 873.614f);
 
+    [Header("Unity kayıt başlangıç pozu")]
+    public bool forceUnityStartPose = true;
+    public bool useLocalTransform = true;
+    public Vector3 forcedUnityStartPosition = new Vector3(-124.123f, -125.322f, 940.1f);
+    public Vector3 forcedUnityStartEuler = new Vector3(0f, 0f, 0f);
+
+    [Header("Klavye kayıt modu")]
+    public bool keyboardRelativeMode = true;
+
     [Header("Interpolation Buffer")]
     [Tooltip("Görsel hareketi kaç saniye geriden interpolate edeceğiz. 0.08 - 0.15 arası genelde iyi.")]
     public float interpolationDelay = 0.06f;
@@ -68,8 +77,27 @@ public class GazeboDataReceiver : MonoBehaviour
 
     void Start()
     {
-        _startPosition = transform.position;
-        _startRotation = transform.rotation;
+        if (forceUnityStartPose)
+        {
+            if (useLocalTransform)
+            {
+                transform.localPosition = forcedUnityStartPosition;
+                transform.localRotation = Quaternion.Euler(forcedUnityStartEuler);
+            }
+            else
+            {
+                transform.position = forcedUnityStartPosition;
+                transform.rotation = Quaternion.Euler(forcedUnityStartEuler);
+            }
+        }
+
+        _startPosition = useLocalTransform ? transform.localPosition : transform.position;
+        _startRotation = useLocalTransform ? transform.localRotation : transform.rotation;
+
+        Debug.Log("[UDP] useLocalTransform: " + useLocalTransform);
+        Debug.Log("[UDP] Unity start LOCAL position: " + transform.localPosition);
+        Debug.Log("[UDP] Unity start WORLD position: " + transform.position);
+        Debug.Log("[UDP] Python origin: " + pythonOrigin);
 
         _running = true;
 
@@ -177,41 +205,54 @@ public class GazeboDataReceiver : MonoBehaviour
 
         if (!useSmoothing)
         {
-            transform.position = targetPos;
-            transform.rotation = targetRot;
+            ApplyPose(targetPos, targetRot);
             return;
         }
 
         float dt = Time.deltaTime;
 
         // Pozisyon deadband
-        float posErrorSqr = (targetPos - transform.position).sqrMagnitude;
+        Vector3 currentPos = useLocalTransform ? transform.localPosition : transform.position;
+        Quaternion currentRot = useLocalTransform ? transform.localRotation : transform.rotation;
+
+        float posErrorSqr = (targetPos - currentPos).sqrMagnitude;
+
         float deadbandSqr = positionDeadband * positionDeadband;
 
         if (posErrorSqr > deadbandSqr)
         {
-            transform.position = Vector3.SmoothDamp(
-                transform.position,
+            Vector3 smoothedPos = Vector3.SmoothDamp(
+                currentPos,
                 targetPos,
                 ref _smoothVelocity,
                 positionSmoothTime,
                 Mathf.Infinity,
                 dt
             );
+
+            if (useLocalTransform)
+                transform.localPosition = smoothedPos;
+            else
+                transform.position = smoothedPos;
         }
 
         // Rotasyon deadband
-        float angleError = Quaternion.Angle(transform.rotation, targetRot);
+        float angleError = Quaternion.Angle(currentRot, targetRot);
 
         if (angleError > rotationDeadbandDeg)
         {
             float t = 1.0f - Mathf.Exp(-rotationSmoothSpeed * dt);
 
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
+            Quaternion smoothedRot = Quaternion.Slerp(
+                currentRot,
                 targetRot,
                 t
             );
+
+            if (useLocalTransform)
+                transform.localRotation = smoothedRot;
+            else
+                transform.rotation = smoothedRot;
         }
     }
 
@@ -288,11 +329,29 @@ public class GazeboDataReceiver : MonoBehaviour
 
     private UnityPose PacketToUnityPose(PacketSample s)
     {
-        Vector3 pyRel = new Vector3(
-            s.px - pythonOrigin.x,
-            s.py - pythonOrigin.y,
-            s.pz - pythonOrigin.z
-        );
+        Vector3 pyRel;
+
+        if (keyboardRelativeMode)
+        {
+            // Klavye kayıt modu:
+            // Python doğrudan relatif x,y,z gönderir.
+            // Bu yüzden pythonOrigin çıkarılmaz.
+            pyRel = new Vector3(
+                s.px,
+                s.py,
+                s.pz
+            );
+        }
+        else
+        {
+            // Gazebo / ArduSub absolute pose modu:
+            // Python absolute pose gönderir, origin çıkarılır.
+            pyRel = new Vector3(
+                s.px - pythonOrigin.x,
+                s.py - pythonOrigin.y,
+                s.pz - pythonOrigin.z
+            );
+        }
 
         Vector3 unityRel = PythonVectorToUnity(pyRel);
 
@@ -400,5 +459,18 @@ public class GazeboDataReceiver : MonoBehaviour
         Quaternion q = Quaternion.LookRotation(unityLeft, unityUp);
 
         return q;
+    }
+    private void ApplyPose(Vector3 position, Quaternion rotation)
+    {
+        if (useLocalTransform)
+        {
+            transform.localPosition = position;
+            transform.localRotation = rotation;
+        }
+        else
+        {
+            transform.position = position;
+            transform.rotation = rotation;
+        }
     }
 }
