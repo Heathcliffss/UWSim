@@ -13,6 +13,16 @@ public class GazeboDataReceiver : MonoBehaviour
     [Header("Ölçek")]
     public float positionScale = 1.0f;
 
+    [Header("Camera-local body-frame position mapping")]
+    public bool useInitialYawBodyFramePositionMapping = true;
+    public bool invertCameraForwardDelta = false;
+    public bool invertCameraRightDelta = false;
+    public bool invertCameraUpDelta = false;
+
+    [Header("Body-frame mapping debug")]
+    public bool debugBodyFrameMapping = true;
+    public int debugBodyFrameEveryNPackets = 30;
+
     [Header("Python başlangıç ofseti")]
     public Vector3 pythonOrigin = new Vector3(-104.002f, -118.9f, 873.614f);
 
@@ -32,6 +42,11 @@ public class GazeboDataReceiver : MonoBehaviour
     [Tooltip("Buffer içinde tutulacak maksimum paket sayısı.")]
     public int maxBufferSamples = 200;
 
+    [Header("Debug")]
+    public bool debugPackets = true;
+    public int debugEveryNPackets = 60;
+    private int _packetCounter = 0;
+
     [Header("Jitter Azaltma")]
     public bool useSmoothing = true;
     public float positionSmoothTime = 0.025f;
@@ -47,6 +62,14 @@ public class GazeboDataReceiver : MonoBehaviour
 
     private Vector3 _startPosition;
     private Quaternion _startRotation;
+
+    [Header("Gazebo relative reference mode")]
+    public bool useFirstPacketAsOrigin = true;
+
+    private bool _hasFirstPacketReference = false;
+    private Vector3 _firstPacketPosition;
+    private Quaternion _firstPacketRotationUnity;
+    private float _firstPacketYawDeg = 0f;
 
     private readonly object _bufferLock = new object();
     private readonly List<PacketSample> _buffer = new List<PacketSample>();
@@ -163,6 +186,23 @@ public class GazeboDataReceiver : MonoBehaviour
         sample.time = BitConverter.ToSingle(data, 24);
         sample.seq = BitConverter.ToSingle(data, 28);
         sample.senderDt = BitConverter.ToSingle(data, 32);
+        
+        _packetCounter++;
+
+        if (debugPackets && (_packetCounter <= 5 || _packetCounter % debugEveryNPackets == 0))
+        {
+            Debug.Log(
+                "[UDP] packet port=" + listenPort +
+                " seq=" + sample.seq +
+                " pos=(" + sample.px.ToString("F3") + ", " +
+                         sample.py.ToString("F3") + ", " +
+                         sample.pz.ToString("F3") + ")" +
+                " rpy=(" + sample.roll.ToString("F1") + ", " +
+                         sample.pitch.ToString("F1") + ", " +
+                         sample.yaw.ToString("F1") + ")" +
+                " time=" + sample.time.ToString("F3")
+            );
+        }
 
         lock (_bufferLock)
         {
@@ -329,23 +369,50 @@ public class GazeboDataReceiver : MonoBehaviour
 
     private UnityPose PacketToUnityPose(PacketSample s)
     {
+        Vector3 pyRaw = new Vector3(
+            s.px,
+            s.py,
+            s.pz
+        );
+
+        Quaternion unityRotCurrent = PythonRPYToUnityRotation(
+            s.roll,
+            s.pitch,
+            s.yaw
+        );
+
+        if (useFirstPacketAsOrigin && !_hasFirstPacketReference)
+        {
+            _firstPacketPosition = pyRaw;
+            _firstPacketRotationUnity = unityRotCurrent;
+            _firstPacketYawDeg = s.yaw;
+            _hasFirstPacketReference = true;
+
+            Debug.Log(
+                "[UDP] First packet reference set. pos=(" +
+                _firstPacketPosition.x.ToString("F3") + ", " +
+                _firstPacketPosition.y.ToString("F3") + ", " +
+                _firstPacketPosition.z.ToString("F3") + ")" +
+                " yaw=" + _firstPacketYawDeg.ToString("F2")
+            );
+        }
+
         Vector3 pyRel;
 
-        if (keyboardRelativeMode)
+        if (useFirstPacketAsOrigin)
+        {
+            pyRel = pyRaw - _firstPacketPosition;
+        }
+        else if (keyboardRelativeMode)
         {
             // Klavye kayıt modu:
             // Python doğrudan relatif x,y,z gönderir.
-            // Bu yüzden pythonOrigin çıkarılmaz.
-            pyRel = new Vector3(
-                s.px,
-                s.py,
-                s.pz
-            );
+            pyRel = pyRaw;
         }
         else
         {
-            // Gazebo / ArduSub absolute pose modu:
-            // Python absolute pose gönderir, origin çıkarılır.
+            // Eski Gazebo absolute pose modu:
+            // Sabit pythonOrigin çıkarılır.
             pyRel = new Vector3(
                 s.px - pythonOrigin.x,
                 s.py - pythonOrigin.y,
@@ -358,13 +425,18 @@ public class GazeboDataReceiver : MonoBehaviour
         UnityPose pose;
         pose.position = _startPosition + unityRel * positionScale;
 
-        Quaternion unityRotRelative = PythonRPYToUnityRotation(
-            s.roll,
-            s.pitch,
-            s.yaw
-        );
+        Quaternion deltaRot;
 
-        pose.rotation = _startRotation * unityRotRelative;
+        if (useFirstPacketAsOrigin)
+        {
+            deltaRot = Quaternion.Inverse(_firstPacketRotationUnity) * unityRotCurrent;
+        }
+        else
+        {
+            deltaRot = unityRotCurrent;
+        }
+
+        pose.rotation = _startRotation * deltaRot;
 
         return pose;
     }
@@ -405,6 +477,83 @@ public class GazeboDataReceiver : MonoBehaviour
     // --------------------------------------------------------------------
     private Vector3 PythonVectorToUnity(Vector3 pyVec)
     {
+        if (useInitialYawBodyFramePositionMapping)
+        {
+            // pyVec burada world/global pozisyon farkı:
+            // current_position - first_position
+            //
+            // İlk yaw açısına göre bu world delta'yı robotun
+            // başlangıç body frame'ine çeviriyoruz.
+            //
+            // Python/Gazebo varsayımı:
+            //   +X = forward world reference at yaw=0
+            //   +Y = right/lateral horizontal axis
+            //   +Z = up
+            //
+            // Body-frame:
+            //   bodyForward = robotun ilk baktığı yöne doğru hareket
+            //   bodyRight   = robotun ilk sağ yönüne doğru hareket
+            //   bodyUp      = yukarı/aşağı hareket
+
+            float yaw0 = _firstPacketYawDeg * Mathf.Deg2Rad;
+
+            float cosYaw = Mathf.Cos(yaw0);
+            float sinYaw = Mathf.Sin(yaw0);
+
+            float dx = pyVec.x;
+            float dy = pyVec.y;
+            float dz = pyVec.z;
+
+            float bodyForward = cosYaw * dx + sinYaw * dy;
+            float bodyRight = -sinYaw * dx + cosYaw * dy;
+            float bodyUp = dz;
+
+            if (invertCameraForwardDelta)
+                bodyForward = -bodyForward;
+
+            if (invertCameraRightDelta)
+                bodyRight = -bodyRight;
+
+            if (invertCameraUpDelta)
+                bodyUp = -bodyUp;
+
+            // Unity Camera local:
+            //   local X = right
+            //   local Y = up
+            //   local Z = forward
+            Vector3 cameraLocalDelta = new Vector3(
+                bodyRight,
+                bodyUp,
+                bodyForward
+            );
+
+            if (debugBodyFrameMapping && (_packetCounter <= 10 || _packetCounter % debugBodyFrameEveryNPackets == 0))
+            {
+                Debug.Log(
+                    "[UDP MAP] pyRel=(" +
+                    pyVec.x.ToString("F3") + ", " +
+                    pyVec.y.ToString("F3") + ", " +
+                    pyVec.z.ToString("F3") + ") " +
+                    "body=(" +
+                    bodyForward.ToString("F3") + " forward, " +
+                    bodyRight.ToString("F3") + " right, " +
+                    bodyUp.ToString("F3") + " up) " +
+                    "camLocal=(" +
+                    cameraLocalDelta.x.ToString("F3") + ", " +
+                    cameraLocalDelta.y.ToString("F3") + ", " +
+                    cameraLocalDelta.z.ToString("F3") + ")"
+                );
+            }
+
+            // Elle hizalanmış kameranın başlangıç rotasyonuna göre
+            // local delta'yı Unity parent/world frame'e taşı.
+            return _startRotation * cameraLocalDelta;
+        }
+
+        // Eski model-style mapping fallback:
+        // Python X -> Unity X
+        // Python Y -> Unity -Z
+        // Python Z -> Unity Y
         return new Vector3(
             pyVec.x,
             pyVec.z,

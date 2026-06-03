@@ -165,6 +165,11 @@ MonoBehaviour:
   listenPort: 5007
   positionScale: 1
   pythonOrigin: {x: -104.002, y: -118.9, z: 873.614}
+  forceUnityStartPose: 1
+  useLocalTransform: 1
+  forcedUnityStartPosition: {x: -124.123, y: -125.322, z: 940.1}
+  forcedUnityStartEuler: {x: 0, y: 0, z: 0}
+  keyboardRelativeMode: 1
   interpolationDelay: 0.06
   maxBufferSamples: 200
   useSmoothing: 1
@@ -197,7 +202,11 @@ MonoBehaviour:
   - {fileID: 1821567593347123208}
   - {fileID: 1753896206087034549}
   isEmergency: 0
+  backOnlyTest: 1
+  forceBackConstantOn: 1
+  targetFPS: 60
   tickRate: 0.1
+  framesPerBit: 6
 --- !u!1 &1753896206087034549
 GameObject:
   m_ObjectHideFlags: 0
