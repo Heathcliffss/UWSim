@@ -420,7 +420,7 @@ public class GazeboDataReceiver : MonoBehaviour
             );
         }
 
-        Vector3 unityRel = PythonVectorToUnity(pyRel);
+        Vector3 unityRel = PositionDeltaToUnity(pyRel);
 
         UnityPose pose;
         pose.position = _startPosition + unityRel * positionScale;
@@ -439,6 +439,19 @@ public class GazeboDataReceiver : MonoBehaviour
         pose.rotation = _startRotation * deltaRot;
 
         return pose;
+    }
+
+    private Vector3 PythonDirectionToUnity(Vector3 pyVec)
+    {
+        // Raw Python/Gazebo direction vector to Unity direction vector.
+        // Bu fonksiyon sadece rotasyon basis vektörleri için kullanılacak.
+        // First-packet origin, camera-local delta, invert flag vb. burada uygulanmaz.
+
+        return new Vector3(
+            pyVec.x,
+            pyVec.z,
+            -pyVec.y
+        );
     }
 
     void OnDestroy()
@@ -475,7 +488,7 @@ public class GazeboDataReceiver : MonoBehaviour
     //   Python Y -> Unity -Z
     //   Python Z -> Unity Y
     // --------------------------------------------------------------------
-    private Vector3 PythonVectorToUnity(Vector3 pyVec)
+    private Vector3 PositionDeltaToUnity(Vector3 pyVec)
     {
         if (useInitialYawBodyFramePositionMapping)
         {
@@ -530,7 +543,7 @@ public class GazeboDataReceiver : MonoBehaviour
             if (debugBodyFrameMapping && (_packetCounter <= 10 || _packetCounter % debugBodyFrameEveryNPackets == 0))
             {
                 Debug.Log(
-                    "[UDP MAP] pyRel=(" +
+                    "[UDP POS MAP] pyRel=(" +
                     pyVec.x.ToString("F3") + ", " +
                     pyVec.y.ToString("F3") + ", " +
                     pyVec.z.ToString("F3") + ") " +
@@ -594,8 +607,8 @@ public class GazeboDataReceiver : MonoBehaviour
             cr * cp
         );
 
-        Vector3 unityRight = PythonVectorToUnity(pyRight).normalized;
-        Vector3 unityUp = PythonVectorToUnity(pyUp).normalized;
+        Vector3 unityRight = PythonDirectionToUnity(pyRight).normalized;
+        Vector3 unityUp = PythonDirectionToUnity(pyUp).normalized;
 
         // Model local +Z = left, yani left = -right
         Vector3 unityLeft = -unityRight;
