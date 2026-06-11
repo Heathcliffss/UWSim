@@ -13,6 +13,14 @@ public class GazeboDataReceiver : MonoBehaviour
     [Header("Ölçek")]
     public float positionScale = 1.0f;
 
+    [Header("Ascend (Yuzeye Cikis) Modu")]
+    public bool ascendActive = false;          // TEST: elle isaretleyince yukari cikar
+    public float surfaceY = -0.298f;           // su yuzeyi Unity Y (elle tune et)
+    public float ascendSpeed = 150f;           // birim/saniye yukari hiz
+    public int ascendUdpPort = 5014;           // OpenCV'den ASCEND sinyali
+    public bool listenForAscend = true;        // sadece bu follower'da acik
+    public string ascendMessage = "ASCEND";
+
     [Header("Camera-local body-frame position mapping")]
     public bool useInitialYawBodyFramePositionMapping = true;
     public bool invertCameraForwardDelta = false;
@@ -62,6 +70,14 @@ public class GazeboDataReceiver : MonoBehaviour
 
     private Vector3 _startPosition;
     private Quaternion _startRotation;
+    
+    // --- Ascend (yuzeye cikis) durum degiskenleri ---
+    private bool _ascending = false;
+    private Vector3 _ascendLockedPos;
+    private UdpClient _ascendUdp;
+    private Thread _ascendThread;
+    private volatile bool _ascendRunning = false;
+    private volatile bool _ascendRequested = false;
 
     [Header("Gazebo relative reference mode")]
     public bool useFirstPacketAsOrigin = true;
@@ -129,6 +145,9 @@ public class GazeboDataReceiver : MonoBehaviour
         _thread.Start();
 
         Debug.Log("[UDP] Receiver started on port " + listenPort);
+        
+        if (listenForAscend)
+            StartAscendListener();
     }
 
     void ReceiveLoop()
@@ -225,6 +244,30 @@ public class GazeboDataReceiver : MonoBehaviour
 
     void Update()
     {
+        // UDP thread'inden ya da Inspector'dan ascend istegi geldi mi?
+        if ((_ascendRequested || ascendActive) && !_ascending)
+        {
+            _ascending = true;
+            // O anki konumu kilitle -> sicrama olmaz, Gazebo'nun son yerinden devam
+            _ascendLockedPos = useLocalTransform ? transform.localPosition : transform.position;
+            Debug.Log("[ASCEND] Yuzeye cikis basladi. Kilitli konum: " + _ascendLockedPos);
+        }
+
+        if (_ascending)
+        {
+            // Gazebo guncellemesini TAMAMEN atla. Sadece Y'de yukari cik.
+            // X-Z son konumda kilitli kalir (dogal gorunur, sicrama yok).
+            Vector3 p = useLocalTransform ? transform.localPosition : transform.position;
+            float newY = Mathf.MoveTowards(p.y, surfaceY, ascendSpeed * Time.deltaTime);
+            Vector3 up = new Vector3(_ascendLockedPos.x, newY, _ascendLockedPos.z);
+
+            if (useLocalTransform) transform.localPosition = up;
+            else transform.position = up;
+
+            return;   // Gazebo isleme mantigina HIC girme
+        }
+
+
         if (!_hasData)
             return;
 
@@ -454,9 +497,46 @@ public class GazeboDataReceiver : MonoBehaviour
         );
     }
 
+
+    void StartAscendListener()
+    {
+        try
+        {
+            _ascendUdp = new UdpClient(ascendUdpPort);
+            _ascendRunning = true;
+            _ascendThread = new Thread(AscendLoop) { IsBackground = true };
+            _ascendThread.Start();
+            Debug.Log("[ASCEND] UDP dinleniyor: port " + ascendUdpPort);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("[ASCEND] UDP baslatilamadi (port " + ascendUdpPort + "): " + e.Message);
+        }
+    }
+
+    void AscendLoop()
+    {
+        IPEndPoint ep = new IPEndPoint(IPAddress.Any, 0);
+        while (_ascendRunning)
+        {
+            try
+            {
+                byte[] data = _ascendUdp.Receive(ref ep);
+                string msg = System.Text.Encoding.UTF8.GetString(data).Trim();
+                if (msg == ascendMessage)
+                    _ascendRequested = true;   // ana thread Update'te isler
+            }
+            catch (SocketException) { break; }
+            catch (Exception) { }
+        }
+    }
+
     void OnDestroy()
     {
         _running = false;
+
+        _ascendRunning = false;
+        try { _ascendUdp?.Close(); } catch { }
 
         try
         {
