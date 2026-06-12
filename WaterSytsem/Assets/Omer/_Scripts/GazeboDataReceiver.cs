@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-
+using System.IO;
+using System.Globalization;
 public class GazeboDataReceiver : MonoBehaviour
 {
     [Header("Ağ Ayarları")]
-    public int listenPort = 5007;
+    public int listenPort = 5008;
 
     [Header("Ölçek")]
     public float positionScale = 1.0f;
@@ -20,6 +21,11 @@ public class GazeboDataReceiver : MonoBehaviour
     public int ascendUdpPort = 5014;           // OpenCV'den ASCEND sinyali
     public bool listenForAscend = true;        // sadece bu follower'da acik
     public string ascendMessage = "ASCEND";
+
+    [Header("GPS Surface Log (yuzeye varinca X-Z yaz)")]
+    public bool logSurfaceGps = true;          // sadece bu follower'da acik
+    public float surfaceReachTolerance = 0.1f; // surfaceY'ye bu kadar yaklasinca 'vardi'
+    public string gpsLogFileName = "gps_surface_log.csv";
 
     [Header("Camera-local body-frame position mapping")]
     public bool useInitialYawBodyFramePositionMapping = true;
@@ -78,6 +84,8 @@ public class GazeboDataReceiver : MonoBehaviour
     private Thread _ascendThread;
     private volatile bool _ascendRunning = false;
     private volatile bool _ascendRequested = false;
+
+    private bool _gpsLogged = false;   // yuzey konumu bir kez yazilsin
 
     [Header("Gazebo relative reference mode")]
     public bool useFirstPacketAsOrigin = true;
@@ -255,14 +263,20 @@ public class GazeboDataReceiver : MonoBehaviour
 
         if (_ascending)
         {
-            // Gazebo guncellemesini TAMAMEN atla. Sadece Y'de yukari cik.
-            // X-Z son konumda kilitli kalir (dogal gorunur, sicrama yok).
             Vector3 p = useLocalTransform ? transform.localPosition : transform.position;
             float newY = Mathf.MoveTowards(p.y, surfaceY, ascendSpeed * Time.deltaTime);
             Vector3 up = new Vector3(_ascendLockedPos.x, newY, _ascendLockedPos.z);
 
             if (useLocalTransform) transform.localPosition = up;
             else transform.position = up;
+
+            // --- GPS: yuzeye varinca (surfaceY'ye yaklasinca) X-Z'yi BIR KEZ CSV'ye yaz ---
+            if (logSurfaceGps && !_gpsLogged &&
+                Mathf.Abs(newY - surfaceY) <= surfaceReachTolerance)
+            {
+                WriteSurfaceGpsLog(up);
+                _gpsLogged = true;
+            }
 
             return;   // Gazebo isleme mantigina HIC girme
         }
@@ -495,6 +509,40 @@ public class GazeboDataReceiver : MonoBehaviour
             pyVec.z,
             -pyVec.y
         );
+    }
+
+    private void WriteSurfaceGpsLog(Vector3 surfacePos)
+    {
+        try
+        {
+            string path = Path.Combine(Application.persistentDataPath, gpsLogFileName);
+            bool newFile = !File.Exists(path);
+
+            using (StreamWriter sw = new StreamWriter(path, true))  // append
+            {
+                if (newFile)
+                    sw.WriteLine("unix_time,follower_surface_x,follower_surface_z,surfaceY");
+
+                double unixTime = (System.DateTime.UtcNow -
+                    new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc)).TotalSeconds;
+                
+                var ci = CultureInfo.InvariantCulture;
+                sw.WriteLine(
+                    unixTime.ToString("F2", ci) + "," +
+                    surfacePos.x.ToString("F4", ci) + "," +
+                    surfacePos.z.ToString("F4", ci) + "," +
+                    surfaceY.ToString("F4", ci)
+                );
+            }
+
+            Debug.Log("[GPS] Yuzey konumu yazildi -> " + path +
+                      "  X=" + surfacePos.x.ToString("F3") +
+                      " Z=" + surfacePos.z.ToString("F3"));
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning("[GPS] Log yazilamadi: " + e.Message);
+        }
     }
 
 
